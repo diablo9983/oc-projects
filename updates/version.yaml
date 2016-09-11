@@ -1,0 +1,6 @@
+1.0.1:
+    - 'Initialize plugin.'
+    - builder_table_create_bootstraphunter_projects_projects.php
+1.0.2:
+    - 'Updated table bootstraphunter_projects_projects'
+    - builder_table_update_bootstraphunter_projects_projects.php

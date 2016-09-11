@@ -1,0 +1,17 @@
+<div class="control-toolbar">
+  <div data-control="toolbar">
+      <button
+          type="button"
+          data-control="popup"
+          data-handler="onAddProjectForm"
+          class="btn btn-primary oc-icon-plus">
+          <?= e(trans('bootstraphunter.projects::lang.plugin.new_project')) ?>
+      </button>
+  </div>
+</div>
+
+<div class="projects">
+  <div id="projects"></div>
+</div>
+
+<div class="loading-overlay"></div>

@@ -1,0 +1,32 @@
+<?php if(!$projects->isEmpty()): ?>
+  <?php foreach($projects as $project): ?>
+    <div class="project">
+      <div class="menu">
+        <a data-toggle="dropdown" href="javascript:;"><i class="oc-icon-cog"></i></a>
+        <ul class="dropdown-menu pull-right">
+          <li>
+            <a href="#"
+                data-handler="onAddProjectForm"
+                data-extra-data="id: <?= $project->id; ?>"
+                data-control="popup">Edit Project</a>
+          </li>
+          <li>
+            <a href="#"
+                data-request="onDeleteProject"
+                data-request-data="id: <?= $project->id; ?>"
+                data-request-confirm="Are you sure? All tasks in this project will also be deleted."
+                data-request-success="refreshProjects()">Delete Project</a></li>
+        </ul>
+      </div>
+      <h3><a href="<?=Backend::url('bootstraphunter/projects/tasks/'.$project->id); ?>"><?= $project->name; ?></a></h3>
+      <p><?= $project->description; ?></p>
+      <span class="created text-muted">
+        <?= $project->updated_at ? 'Updated on '.$project->updated_at : 'Created on '.$project->created_at; ?>
+      </span>
+    </div>
+  <?php endforeach; ?>
+<?php else: ?>
+<div class="no-projects">
+  No projects created yet.
+</div>
+<?php endif; ?>

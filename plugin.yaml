@@ -1,0 +1,16 @@
+plugin:
+    name: 'bootstraphunter.projects::lang.plugin.name'
+    description: 'bootstraphunter.projects::lang.plugin.description'
+    author: 'Bootstrap Hunter'
+    icon: oc-icon-tasks
+    homepage: ''
+navigation:
+    bh-projects:
+        label: 'bootstraphunter.projects::lang.plugin.projects'
+        url: bootstraphunter/projects/projects
+        icon: icon-tasks
+        sideMenu:
+            projects:
+                label: 'bootstraphunter.projects::lang.plugin.projects'
+                url: bootstraphunter/projects/projects
+                icon: icon-archive

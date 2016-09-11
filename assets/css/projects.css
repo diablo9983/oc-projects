@@ -121,3 +121,96 @@
 .modal-footer .loading .loading-indicator-container {
   display: none;
 }
+
+.tasks-groups {
+  height: calc(100% - 64px);
+  padding: 0 20px 20px;
+}
+
+.tasks-group {
+  width: 300px;
+  margin: 20px 10px;
+  border-radius: 5px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: #ecf0f1;
+}
+
+.tasks-group-header {
+  position: relative;
+}
+.tasks-group-header h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 13px 15px 10px;
+}
+.tasks-group-header .menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.tasks-group-header .menu > a {
+  line-height: 40px;
+  width: 30px;
+  color: #bbb;
+  display: block;
+  text-align: center;
+}
+.tasks-group:hover .tasks-group-header .menu > a {
+  color: #888;
+}
+.tasks-group-header .menu > a:hover {
+  color: #555 !important;
+}
+.tasks-group-content {
+  border-top: 1px solid #e0e0e0;
+  padding: 10px;
+  position: relative;
+}
+.tasks-group-content-empty {
+  height: 70px;
+}
+
+.task {
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  border-radius: 5px;
+}
+.task.task-placeholder,
+.task-placeholder-empty {
+  background-color: rgba(0,0,0,0.025);
+  color: transparent;
+  border: 1px dashed #ccc;
+}
+.tasks-group-content-empty .task.task-placeholder {
+  background-color: rgba(255,255,255,0.7);
+  border: 0;
+  height: 48px;
+  top: 11px !important;
+  position: absolute;
+  left: 11px !important;
+  width: calc(100% - 22px);
+}
+.task-placeholder-empty {
+  height: 50px;
+  position: absolute;
+  width: calc(100% - 20px);
+  top: 10px;
+  left: 10px;
+}
+.task + .task:not(.task-placeholder-empty) {
+  margin-top: 10px;
+}
+.task h4 {
+  margin: 0;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 10px 10px 8px;
+}
+.task h4 strong {
+  margin-right: 5px;
+}

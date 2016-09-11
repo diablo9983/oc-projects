@@ -1,10 +1,11 @@
 <?php namespace BootstrapHunter\Projects\Controllers;
 
-use Backend\Classes\Controller;
-use BackendMenu;
 use Request;
+use BackendMenu;
+use Backend\Classes\Controller;
 use BootstrapHunter\Projects\Models\Projects as ProjectsModel;
-//use BootstrapHunter\Projects\Models\Tickets as TicketsModel;
+use BootstrapHunter\Projects\Models\Tasks as TasksModel;
+use BootstrapHunter\Projects\Models\TaskGroups as TaskGroupsModel;
 
 class Projects extends Controller
 {
@@ -17,12 +18,24 @@ class Projects extends Controller
 
         $this->bodyClass = 'compact-container';
         $this->pageTitle = 'bootstraphunter.projects::lang.plugin.projects';
+
+        $this->addCss('/plugins/bootstraphunter/projects/assets/css/projects.css', 'BootstrapHunter.Projects');
+        $this->addJs('/plugins/bootstraphunter/projects/assets/js/projects.js', 'BootstrapHunter.Projects');
     }
 
     public function index()
     {
-      $this->addCss('/plugins/bootstraphunter/projects/assets/css/projects.css', 'BootstrapHunter.Projects');
-      $this->addJs('/plugins/bootstraphunter/projects/assets/js/projects.js', 'BootstrapHunter.Projects');
+      $this->vars['projects'] = $this->makePartial('projects', ['projects' => ProjectsModel::all()]);
+    }
+
+    public function view($id = 0)
+    {
+      $this->addJs('/plugins/bootstraphunter/projects/assets/js/sortable.js', 'BootstrapHunter.Projects');
+      $this->addJs('/plugins/bootstraphunter/projects/assets/js/jquery.fn.sortable.js', 'BootstrapHunter.Projects');
+      $this->addJs('/plugins/bootstraphunter/projects/assets/js/tasks.js', 'BootstrapHunter.Projects');
+
+      $this->vars['project'] = ProjectsModel::find($id);
+      $this->vars['groups'] = TaskGroupsModel::where('project','=',$id)->orderBy('order','ASC')->get();
     }
 
     public function onAddProjectForm()

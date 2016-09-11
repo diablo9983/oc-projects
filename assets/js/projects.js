@@ -1,9 +1,3 @@
-(function() {
-
-  refreshProjects();
-
-})($)
-
 function refreshProjects(el)
 {
   if(typeof el !== 'undefined') {
@@ -18,5 +12,4 @@ function refreshProjects(el)
       $('.loading-overlay').hide()
     }
   })
-
 }

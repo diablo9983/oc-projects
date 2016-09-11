@@ -1,0 +1,37 @@
+<div class="control-breadcrumb">
+        <ul>
+            <li><a href="<?=Backend::url('bootstraphunter/projects/projects'); ?>">Projects</a></li>
+            <li><?= $project->name; ?></li>
+            <li>Tasks</li>
+        </ul>
+    </div>
+
+<div class="tasks-groups">
+  <?php foreach($groups as $group): ?>
+    <div class="tasks-group">
+      <div class="tasks-group-header">
+        <div class="menu dropdown">
+          <a href="javascript:;" data-toggle="dropdown"><i class="oc-icon-cog"></i></a>
+          <ul class="dropdown-menu pull-right">
+            <li><a href="#" class="oc-icon-plus">Add Task</a></li>
+          </ul>
+        </div>
+        <h3><?= $group->name; ?></h3>
+      </div>
+      <div class="<?php if($group->tasks->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
+        <?php if(!$group->tasks->isEmpty()): ?>
+          <?php foreach ($group->tasks as $task): ?>
+            <div class="task">
+              <h4 class="handler"><strong>T<?= $task->id; ?></strong><?= $task->name; ?></h4>
+            </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <div class="task-placeholder-empty">
+
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+
+  <?php endforeach; ?>
+</div>

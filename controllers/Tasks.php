@@ -25,7 +25,7 @@ class Tasks extends Controller
 
     public function index($id = 0)
     {
-      $this->vars['project'] = ProjectsModel::find($id);
+      return redirect(\Backend::url('bootstraphunter/projects/projects'));
       //$this->addCss('/plugins/bootstraphunter/projects/assets/css/projects.css', 'BootstrapHunter.Projects');
       //$this->addJs('/plugins/bootstraphunter/projects/assets/js/projects.js', 'BootstrapHunter.Projects');
     }

@@ -5,7 +5,10 @@ use Model;
 class TaskGroups extends Model
 {
   public $hasMany = [
-    'tasks' => 'BootstrapHunter\Projects\Models\Tasks'
+    'task' => [
+      'BootstrapHunter\Projects\Models\Task',
+      'order' => 'order asc'
+    ]
   ];
 
   protected $dates = ['created_at', 'updated_at'];

@@ -18,17 +18,15 @@
         </div>
         <h3><?= $group->name; ?></h3>
       </div>
-      <div class="<?php if($group->tasks->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
-        <?php if(!$group->tasks->isEmpty()): ?>
-          <?php foreach ($group->tasks as $task): ?>
-            <div class="task">
+      <div data-group-id="<?= $group->id; ?>" class="<?php if($group->task->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
+        <?php if(!$group->task->isEmpty()): ?>
+          <?php foreach ($group->task as $task): ?>
+            <div class="task" data-id="<?= $task->id; ?>">
               <h4 class="handler"><strong>T<?= $task->id; ?></strong><?= $task->name; ?></h4>
             </div>
           <?php endforeach; ?>
         <?php else: ?>
-          <div class="task-placeholder-empty">
-
-          </div>
+          <div class="task-placeholder-empty" data-id="0"></div>
         <?php endif; ?>
       </div>
     </div>

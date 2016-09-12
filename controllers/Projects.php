@@ -4,7 +4,7 @@ use Request;
 use BackendMenu;
 use Backend\Classes\Controller;
 use BootstrapHunter\Projects\Models\Projects as ProjectsModel;
-use BootstrapHunter\Projects\Models\Tasks as TasksModel;
+use BootstrapHunter\Projects\Models\Task as TaskModel;
 use BootstrapHunter\Projects\Models\TaskGroups as TaskGroupsModel;
 
 class Projects extends Controller
@@ -73,6 +73,18 @@ class Projects extends Controller
       ProjectsModel::deleteProject($id);
 
       return true;
+    }
+
+    public function onTasksSave()
+    {
+      $group_id = (int) Request::input('group');
+      $tasks = (array) Request::input('tasks');
+
+      $i = 0;
+      foreach($tasks as $task) {
+        TaskModel::where('id',$task)->update(['task_groups_id' => $group_id, 'order' => $i]);
+        $i++;
+      }
     }
 
     public function onGetProjectList()

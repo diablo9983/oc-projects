@@ -2,7 +2,7 @@
 
 use Model;
 
-class Tasks extends Model
+class Task extends Model
 {
     protected $dates = ['created_at'];
 

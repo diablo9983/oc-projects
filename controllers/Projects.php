@@ -48,6 +48,14 @@ class Projects extends Controller
       return $this->makePartial('addProject', $data);
     }
 
+    public function onAddTaskForm()
+    {
+      $data = [
+        'group_id' => Request::input('group_id')
+      ];
+      return $this->makePartial('addTask', $data);
+    }
+
     public function onAddProject()
     {
       $data['name'] = Request::input('name');
@@ -73,6 +81,16 @@ class Projects extends Controller
       ProjectsModel::deleteProject($id);
 
       return true;
+    }
+
+    public function onAddTask()
+    {
+      $data['name'] = Request::input('name');
+      $data['description'] = Request::input('description');
+      $data['group_id'] = Request::input('group_id');
+      $task = TaskModel::addTask($data);
+      
+      return ['group' => $task['group_id'], 'task' => $this->makePartial('task', ['task' => $task['task']])];
     }
 
     public function onTasksSave()

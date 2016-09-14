@@ -38,3 +38,11 @@ function updatePlaceholder(list)
     list.addClass('tasks-group-content-empty')
   }
 }
+
+function addTask(el, data)
+{
+  $('#tasks-'+data.group).append(data.task);
+  if(typeof el !== 'undefined') {
+    $(el).parents('.modal').trigger('close.oc.popup');
+  }
+}

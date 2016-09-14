@@ -13,7 +13,12 @@
         <div class="menu dropdown">
           <a href="javascript:;" data-toggle="dropdown"><i class="oc-icon-cog"></i></a>
           <ul class="dropdown-menu pull-right">
-            <li><a href="#" class="oc-icon-plus">Add Task</a></li>
+            <li>
+              <a href="#"
+                 class="oc-icon-plus"
+                 data-handler="onAddTaskForm"
+                 data-extra-data="group_id:<?= $group->id; ?>"
+                 data-control="popup">Add Task</a></li>
           </ul>
         </div>
         <h3><?= $group->name; ?></h3>
@@ -21,9 +26,7 @@
       <div data-group-id="<?= $group->id; ?>" class="<?php if($group->task->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
         <?php if(!$group->task->isEmpty()): ?>
           <?php foreach ($group->task as $task): ?>
-            <div class="task" data-id="<?= $task->id; ?>">
-              <h4 class="handler"><strong>T<?= $task->id; ?></strong><?= $task->name; ?></h4>
-            </div>
+            <?= $this->makePartial('task', ['task' => $task]); ?>
           <?php endforeach; ?>
         <?php else: ?>
           <div class="task-placeholder-empty" data-id="0"></div>

@@ -56,6 +56,27 @@ class Projects extends Controller
       return $this->makePartial('addTask', $data);
     }
 
+    public function onOrderGroupsForm()
+    {
+      $data = [
+        'groups' => TaskGroupsModel::orderBy('order','asc')->get()
+      ];
+      return $this->makePartial('orderGroups', $data);
+    }
+
+    public function onOrderGroups()
+    {
+      $groups = Request::input('groups');
+      TaskGroupsModel::updateOrder($groups);
+    }
+
+    public function onGetGroups()
+    {
+      $id = Request::input('id');
+      $this->vars['project'] = ProjectsModel::find($id);
+      $this->vars['groups'] = TaskGroupsModel::where('project','=',$id)->orderBy('order','ASC')->get();
+    }
+
     public function onAddProject()
     {
       $data['name'] = Request::input('name');

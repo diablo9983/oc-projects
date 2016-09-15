@@ -4,6 +4,8 @@
         'description' => 'Manage projects and tasks with ease',
 
         'projects' => 'Projects',
-        'new_project' => 'New Project'
+        'new_project' => 'New Project',
+
+        'reorder_groups' => 'Reorder groups'
     ],
 ];

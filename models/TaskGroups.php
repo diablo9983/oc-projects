@@ -15,4 +15,12 @@ class TaskGroups extends Model
 
   public $table = 'bootstraphunter_projects_task_groups';
 
+  public static function updateOrder($groups)
+  {
+    for($i = 0; $i < count($groups); $i++) {
+      static::where('id',$groups[$i])->update(['order' => $i]);
+    }
+    return true;
+  }
+
 }

@@ -1,0 +1,30 @@
+<div class="tasks-groups">
+  <?php foreach($groups as $group): ?>
+    <div class="tasks-group">
+      <div class="tasks-group-header">
+        <div class="menu dropdown">
+          <a href="javascript:;" data-toggle="dropdown"><i class="oc-icon-caret-down"></i></a>
+          <ul class="dropdown-menu pull-right">
+            <li>
+              <a href="#"
+                 class="oc-icon-plus"
+                 data-handler="onAddTaskForm"
+                 data-extra-data="group_id:<?= $group->id; ?>"
+                 data-control="popup">Add Task</a></li>
+          </ul>
+        </div>
+        <h3><?= $group->name; ?></h3>
+      </div>
+      <div data-group-id="<?= $group->id; ?>" class="<?php if($group->task->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
+        <?php if(!$group->task->isEmpty()): ?>
+          <?php foreach ($group->task as $task): ?>
+            <?= $this->makePartial('task', ['task' => $task]); ?>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <div class="task-placeholder-empty" data-id="0"></div>
+        <?php endif; ?>
+      </div>
+    </div>
+
+  <?php endforeach; ?>
+</div>

@@ -125,20 +125,43 @@
   display: none;
 }
 
+#tasks-groups {
+  height: calc(100% - 110px);
+  overflow: hidden;
+}
 .tasks-groups {
-  height: calc(100% - 64px);
-  padding: 0 20px 20px;
+  height: 100%;
+  padding: 0;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.tasks-groups.moving {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
+
+
 .tasks-group {
+  white-space: normal;
   width: 300px;
-  margin: 20px 10px;
+  margin: 20px 10px 19px;
   border-radius: 5px;
   display: inline-block;
   vertical-align: top;
   background-color: #ecf0f1;
 }
-
+.tasks-group:first-child {
+  margin-left: 20px;
+}
+.tasks-group:last-child {
+  margin-right: 20px;
+}
 .tasks-group-header {
   position: relative;
 }
@@ -174,8 +197,11 @@
   color: #555 !important;
 }
 .tasks-group-content {
-  padding: 0 10px 10px;
+  padding: 0 10px 1px;
+  margin-bottom: 10px;
   position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .tasks-group-content-empty {
   height: 59px;
@@ -185,12 +211,21 @@
   box-shadow: 0 1px 0 rgba(0,0,0,0.1);
   background-color: #fff;
   border-radius: 5px;
+  margin-bottom: 1px;
+  cursor: move;
+}
+.task a {
+  color: #333;
 }
 .task.task-placeholder,
 .task-placeholder-empty {
   background-color: rgba(0,0,0,0.025);
-  color: transparent;
   border: 1px dashed #ccc;
+}
+.task.task-placeholder,
+.task.task-placeholder *,
+.task-placeholder-empty {
+  color: transparent;
 }
 .task.task-placeholder {
   border: 0;
@@ -242,7 +277,7 @@
 .task h4 {
   margin: 0;
   font-size: 13px;
-  line-height: 16px;
+  line-height: 18px;
   padding: 10px 10px 8px;
 }
 .task h4 strong {
@@ -268,4 +303,5 @@
 }
 .list-group .handle {
   margin-top: -2px;
+  cursor: ns-resize;
 }

@@ -50,18 +50,38 @@ class Projects extends Controller
 
     public function onAddTaskForm()
     {
-      $data = [
-        'group_id' => Request::input('group_id')
-      ];
+      $data['group_id'] = Request::input('group_id');
+      if(Request::input('id')) {
+        $data['id'] = Request::input('id');
+        $data['task'] = TaskModel::find(Request::input('id'));
+      }
       return $this->makePartial('addTask', $data);
     }
 
     public function onOrderGroupsForm()
     {
-      $data = [
-        'groups' => TaskGroupsModel::orderBy('order','asc')->get()
-      ];
+      $id = Request::input('project_id');
+      $data['groups'] = TaskGroupsModel::where('project', $id)->orderBy('order','asc')->get();
       return $this->makePartial('orderGroups', $data);
+    }
+
+    public function onAddGroupForm()
+    {
+      $data['project_id'] = Request::input('project_id');
+      if(Request::input('id')) {
+        $data['id'] = Request::input('id');
+        $data['group'] = TaskGroupsModel::find(Request::input('id'));
+      }
+      return $this->makePartial('addGroup', $data);
+    }
+
+    public function onAddGroup()
+    {
+      $data['name'] = Request::input('name');
+      $data['project'] = Request::input('project_id');
+      TaskGroupsModel::addGroup($data);
+
+      return true;
     }
 
     public function onOrderGroups()
@@ -74,7 +94,7 @@ class Projects extends Controller
     {
       $id = Request::input('id');
       $this->vars['project'] = ProjectsModel::find($id);
-      $this->vars['groups'] = TaskGroupsModel::where('project','=',$id)->orderBy('order','ASC')->get();
+      $this->vars['groups'] = TaskGroupsModel::where('project', $id)->orderBy('order','ASC')->get();
     }
 
     public function onAddProject()
@@ -110,7 +130,7 @@ class Projects extends Controller
       $data['description'] = Request::input('description');
       $data['group_id'] = Request::input('group_id');
       $task = TaskModel::addTask($data);
-      
+
       return ['group' => $task['group_id'], 'task' => $this->makePartial('task', ['task' => $task['task']])];
     }
 

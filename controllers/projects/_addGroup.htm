@@ -1,0 +1,41 @@
+<?php
+  $request = 'onAddGroup';
+  $name = '';
+  $request_data = 'data-request-data="project_id:'.$project_id;
+  $title = 'Add Group';
+  if(isset($id)) {
+    $request = 'onEditGroup';
+    $request_data .= ',id:'.$id;
+    $title = 'Edit Group';
+    $name = $group->name;
+  }
+  $request_data .= '" ';
+?>
+<form
+  method="post"
+  action="#"
+  data-request-loading=".loading .loading-indicator-container"
+  data-request="<?= $request; ?>" <?= $request_data; ?>
+  data-request-success="addGroup(this,data)">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="popup">×</button>
+    <h4 class="modal-title"><?= $title; ?></h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label>Group name</label>
+      <input class="form-control" name="name" type="text">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="loading">
+      <div class="loading-indicator-container">
+        <div class="loading-indicator size-small">
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="button" class="btn btn-default" data-dismiss="popup">Cancel</button>
+  </div>
+</form>

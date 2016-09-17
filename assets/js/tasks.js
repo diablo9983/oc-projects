@@ -1,3 +1,4 @@
+var clicked = false, originLeft, nodeLeft
 $(document).ready(function() {
   initGroups()
 
@@ -15,8 +16,32 @@ $(document).ready(function() {
   $('#tasks-groups').on('ajaxUpdate', function() {
     initGroups()
     $('.loading .loading-indicator-container').hide()
+  }).on('mousedown','.tasks-groups', function(e) {
+    if(!$(e.target).is('.tasks-groups')) return
+
+    clicked = true
+    originLeft = e.pageX
+    nodeLeft = $(this).scrollLeft()
+    $('.tasks-groups').addClass('moving')
+  }).on('mousemove', function(e) {
+    if(!clicked) return;
+
+    $('.tasks-groups').scrollLeft(nodeLeft + (originLeft - e.pageX))
+  }).on('mouseup', function() {
+    clicked = false
+    $('.tasks-groups').removeClass('moving')
   })
+
+  $(window).on('resize', setTasksHeight)
+  setTasksHeight()
 })
+
+function setTasksHeight()
+{
+  var h = $(window).height() - ($('#layout-mainmenu').height() + $('.control-toolbar').not('#layout-mainmenu').height() + $('.control-breadcrumb').height() + 135)
+  console.log(h)
+  $('.tasks-group-content').css({maxHeight: h + 'px'})
+}
 
 function initGroups()
 {
@@ -53,17 +78,20 @@ function initOrderGroups()
         data: {
           groups: $(event.target).sortable('toArray')
         },
-        success: function() {
-          $.request('onGetGroups', {
-            data: {
-              id: $('#tasks-groups').data('project-id')
-            },
-            beforeUpdate: destroyGroups,
-            update: {'groups':'#tasks-groups'}
-          })
-        }
+        success: reloadGroups
       })
     }
+  })
+}
+
+function reloadGroups()
+{
+  $.request('onGetGroups', {
+    data: {
+      id: $('#tasks-groups').data('project-id')
+    },
+    beforeUpdate: destroyGroups,
+    update: {'groups':'#tasks-groups'}
   })
 }
 
@@ -83,6 +111,14 @@ function addTask(el, data)
 {
   $('#tasks-'+data.group).append(data.task)
   updatePlaceholder($('#tasks-'+data.group))
+  if(typeof el !== 'undefined') {
+    $(el).parents('.modal').trigger('close.oc.popup')
+  }
+}
+
+function addGroup(el, data)
+{
+  reloadGroups()
   if(typeof el !== 'undefined') {
     $(el).parents('.modal').trigger('close.oc.popup')
   }

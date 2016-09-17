@@ -11,14 +11,14 @@
     <div class="btn-group">
       <button type="button"
         data-control="popup"
-        data-handler="onOrderGroupsForm"
+        data-handler="onOpenOrderGroupsPopup"
         data-extra-data="project_id:<?= $project->id; ?>"
         class="btn btn-primary oc-icon-list">
         <?= e(trans('bootstraphunter.projects::lang.plugin.reorder_groups')) ?>
       </button>
       <button type="button"
         data-control="popup"
-        data-handler="onAddGroupForm"
+        data-handler="onOpenAddGroupForm"
         data-extra-data="project_id:<?= $project->id; ?>"
         class="btn btn-primary oc-icon-plus">
         Add Group
@@ -38,7 +38,7 @@
               <li>
                 <a href="#"
                    class="oc-icon-plus"
-                   data-handler="onAddTaskForm"
+                   data-handler="onOpenAddTaskForm"
                    data-extra-data="group_id:<?= $group->id; ?>"
                    data-control="popup">Add Task</a></li>
             </ul>

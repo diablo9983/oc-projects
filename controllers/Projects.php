@@ -38,41 +38,41 @@ class Projects extends Controller
       $this->vars['groups'] = TaskGroupsModel::where('project','=',$id)->orderBy('order','ASC')->get();
     }
 
-    public function onAddProjectForm()
+    public function onOpenAddProjectForm()
     {
       $data = [];
       if(Request::input('id')) {
         $data['id'] = Request::input('id');
         $data['project'] = ProjectsModel::find(Request::input('id'));
       }
-      return $this->makePartial('addProject', $data);
+      return $this->makePartial('addProjectForm', $data);
     }
 
-    public function onAddTaskForm()
+    public function onOpenAddTaskForm()
     {
       $data['group_id'] = Request::input('group_id');
       if(Request::input('id')) {
         $data['id'] = Request::input('id');
         $data['task'] = TaskModel::find(Request::input('id'));
       }
-      return $this->makePartial('addTask', $data);
+      return $this->makePartial('addTaskForm', $data);
     }
 
-    public function onOrderGroupsForm()
+    public function onOpenOrderGroupsPopup()
     {
       $id = Request::input('project_id');
       $data['groups'] = TaskGroupsModel::where('project', $id)->orderBy('order','asc')->get();
-      return $this->makePartial('orderGroups', $data);
+      return $this->makePartial('orderGroupsPopup', $data);
     }
 
-    public function onAddGroupForm()
+    public function onOpenAddGroupForm()
     {
       $data['project_id'] = Request::input('project_id');
       if(Request::input('id')) {
         $data['id'] = Request::input('id');
         $data['group'] = TaskGroupsModel::find(Request::input('id'));
       }
-      return $this->makePartial('addGroup', $data);
+      return $this->makePartial('addGroupForm', $data);
     }
 
     public function onAddGroup()

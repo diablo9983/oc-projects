@@ -24,7 +24,7 @@ $(document).ready(function() {
     nodeLeft = $(this).scrollLeft()
     $('.tasks-groups').addClass('moving')
   }).on('mousemove', function(e) {
-    if(!clicked) return;
+    if(!clicked) return
 
     $('.tasks-groups').scrollLeft(nodeLeft + (originLeft - e.pageX))
   }).on('mouseup', function() {
@@ -39,7 +39,6 @@ $(document).ready(function() {
 function setTasksHeight()
 {
   var h = $(window).height() - ($('#layout-mainmenu').height() + $('.control-toolbar').not('#layout-mainmenu').height() + $('.control-breadcrumb').height() + 135)
-  console.log(h)
   $('.tasks-group-content').css({maxHeight: h + 'px'})
 }
 

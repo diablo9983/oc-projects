@@ -5,12 +5,16 @@ use Model;
 class TaskGroups extends Model
 {
   use \October\Rain\Database\Traits\Validation;
-  
+
   public $hasMany = [
     'task' => [
       'BootstrapHunter\Projects\Models\Task',
       'order' => 'order asc'
     ]
+  ];
+
+  public $casts = [
+    'hidden' => 'boolean'
   ];
 
   public $rules = [
@@ -29,18 +33,36 @@ class TaskGroups extends Model
     return true;
   }
 
-  public static function addGroup($data)
+  public static function saveGroup($data)
   {
-    $order = static::where('project',$data['project'])->orderBy('order','desc')->first();
-    $order = is_null($order) ? 0 : $order->order + 1;
+    if(isset($data['id'])) {
+      $group = TaskGroups::find($data['id']);
+    } else {
+      $group = new TaskGroups;
+    }
+    if(isset($data['project'])) {
+      $order = static::where('project',$data['project'])->orderBy('order','desc')->first();
+      $order = is_null($order) ? 0 : $order->order + 1;
 
-    $group          = new TaskGroups;
-    $group->name    = $data['name'];
-    $group->project = $data['project'];
-    $group->order   = $order;
+      $group->project = $data['project'];
+      $group->order   = $order;
+    }
+
+    $group->name = $data['name'];
+
     $group->save();
 
-    return true;
+    return $group;
+  }
+
+  public function scopeVisible($query)
+  {
+    return $query->where('hidden', 0);
+  }
+
+  public function scopeFromProject($query, $id)
+  {
+    return $query->where('project', $id);
   }
 
 }

@@ -32,6 +32,10 @@ $(document).ready(function() {
     $('.tasks-groups').removeClass('moving')
   })
 
+  $(document).on('click', '#groups-order .edit-group', function() {
+    $(this).closest('.control-popup').trigger('close.oc.popup')
+  })
+
   $(window).on('resize', setTasksHeight)
   setTasksHeight()
 })
@@ -70,6 +74,7 @@ function destroyGroups()
 function initOrderGroups()
 {
   $('#groups-order').sortable({
+    handle: '.handle',
     ghostClass: 'list-group-placeholder',
     onSort: function(event) {
       $('.loading .loading-indicator-container').show()
@@ -118,10 +123,21 @@ function saveTask(el, data, update)
   }
 }
 
-function addGroup(el, data)
+function addGroup(el)
 {
   reloadGroups()
   if(typeof el !== 'undefined') {
     $(el).parents('.modal').trigger('close.oc.popup')
+  }
+}
+
+function hideGroup(data,fromPopup)
+{
+  reloadGroups()
+  if(fromPopup) {
+    var li = $('.list-group').find('li[data-id="' + data.id + '"]')
+    li.removeClass('group-hidden');
+    li.find('a.show-group').tooltip('hide')
+    li.find('a.show-group').remove()
   }
 }

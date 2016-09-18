@@ -6,6 +6,6 @@
         'projects' => 'Projects',
         'new_project' => 'New Project',
 
-        'reorder_groups' => 'Reorder groups'
+        'manage_groups' => 'Manage groups'
     ],
 ];

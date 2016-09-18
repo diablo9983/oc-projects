@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="popup">×</button>
+  <h4 class="modal-title"><?= e(trans('bootstraphunter.projects::lang.plugin.manage_groups')) ?></h4>
+</div>
+<div class="modal-body">
+  <ul id="groups-order" class="list-group">
+    <?php foreach($groups as $group): ?>
+      <li data-id="<?= $group->id; ?>"<?php if($group->hidden): ?> class="group-hidden"<?php endif; ?>>
+        <span class="pull-right">
+          <a href="#" class="edit-group" data-toggle="tooltip" title="Edit Group" data-handler="onOpenAddGroupForm"
+          data-extra-data="id:<?= $group->id; ?>"
+          data-control="popup"><i class="icon-pencil"></i></a>
+          <?php if($group->hidden): ?>
+            <a href="#"
+               class="show-group"
+               data-toggle="tooltip"
+               title="Show Group"
+               data-request="onHideGroup"
+               data-request-data="id:<?= $group->id; ?>,hide:0"
+               data-request-success="hideGroup(data,true)"><i class="icon-eye"></i></a>
+          <?php endif; ?>
+          <a href="#" class="edit-group" data-toggle="tooltip" title="Delete Group"><i class="icon-trash"></i></a>
+        </span>
+        <span class="handle"><i class="oc-icon-reorder"></i></span>
+        <span class="group-name"><?= $group->name; ?></span>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
+<div class="modal-footer">
+  <div class="loading">
+    <div class="loading-indicator-container">
+      <div class="loading-indicator size-small">
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-default" data-dismiss="popup">Done</button>
+</div>

@@ -1,13 +1,13 @@
 <?php
-  $request = 'onAddGroup';
   $name = '';
-  $request_data = 'data-request-data="project_id:'.$project_id;
+  $request_data = 'data-request-data="';
   $title = 'Add Group';
   if(isset($id)) {
-    $request = 'onEditGroup';
-    $request_data .= ',id:'.$id;
+    $request_data .= 'id:'.$id;
     $title = 'Edit Group';
     $name = $group->name;
+  } else {
+    $request_data .= 'project_id:'.$project_id;
   }
   $request_data .= '" ';
 ?>
@@ -15,7 +15,7 @@
   method="post"
   action="#"
   data-request-loading=".loading .loading-indicator-container"
-  data-request="<?= $request; ?>" <?= $request_data; ?>
+  data-request="onSaveGroup" <?= $request_data; ?>
   data-request-success="addGroup(this,data)">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="popup">×</button>
@@ -24,7 +24,7 @@
   <div class="modal-body">
     <div class="form-group">
       <label>Group name</label>
-      <input class="form-control" name="name" type="text">
+      <input class="form-control" name="name" value="<?= $name; ?>" type="text">
     </div>
   </div>
   <div class="modal-footer">

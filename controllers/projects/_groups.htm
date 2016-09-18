@@ -15,9 +15,10 @@
             <li>
               <a href="#"
                 class="oc-icon-eye"
-                data-request="onDeleteGroup"
+                data-request="onHideGroup"
                 data-request-data="id:<?= $group->id; ?>"
-                data-request-confirm="Are you really want to hide column?">Hide Group</a>
+                data-request-confirm="Are you really want to hide column?"
+                data-request-success="reloadGroups()">Hide Group</a>
             </li>
           </ul>
         </div>

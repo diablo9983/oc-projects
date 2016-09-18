@@ -31,12 +31,14 @@ class Projects extends Controller
 
     public function view($id = 0)
     {
+      //$this->addCss('/plugins/bootstraphunter/projects/assets/css/selectize.css', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/sortable.js', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/jquery.fn.sortable.js', 'BootstrapHunter.Projects');
+      //$this->addJs('/plugins/bootstraphunter/projects/assets/js/selectize.js', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/tasks.js', 'BootstrapHunter.Projects');
 
       $this->vars['project'] = ProjectsModel::find($id);
-      $this->vars['groups'] = TaskGroupsModel::where('project','=',$id)->orderBy('order','ASC')->get();
+      $this->vars['groups'] = TaskGroupsModel::visible()->fromProject($id)->orderBy('order','ASC')->get();
     }
 
     public function onOpenAddProjectForm()
@@ -59,11 +61,11 @@ class Projects extends Controller
       return $this->makePartial('addTaskForm', $data);
     }
 
-    public function onOpenOrderGroupsPopup()
+    public function onOpenManageGroupsPopup()
     {
       $id = Request::input('project_id');
-      $data['groups'] = TaskGroupsModel::where('project', $id)->orderBy('order','asc')->get();
-      return $this->makePartial('orderGroupsPopup', $data);
+      $data['groups'] = TaskGroupsModel::fromProject($id)->orderBy('order','asc')->get();
+      return $this->makePartial('manageGroupsPopup', $data);
     }
 
     public function onOpenAddGroupForm()
@@ -76,14 +78,41 @@ class Projects extends Controller
       return $this->makePartial('addGroupForm', $data);
     }
 
-    public function onAddGroup()
+    public function onSaveGroup()
     {
+      if(Request::input('id')) $data['id'] = Request::input('id');
       $data['name'] = Request::input('name');
-      $data['project'] = Request::input('project_id');
-      TaskGroupsModel::addGroup($data);
+      if(Request::input('project_id')) $data['project'] = Request::input('project_id');
+      TaskGroupsModel::saveGroup($data);
 
-      Flash::success('Group has been added.');
+      if(Request::input('id')) {
+        Flash::success('Group has been updated.');
+      } else {
+        Flash::success('Group has been added.');
+      }
       return true;
+    }
+
+    public function onDeleteGroup()
+    {
+      $e = 'lol';
+    }
+
+    public function onHideGroup()
+    {
+      $id = Request::input('id');
+      $hide = !is_null(Request::input('hide')) ? intval(Request::input('hide')) : 1;
+
+      $group = TaskGroupsModel::find($id);
+      $group->hidden = $hide;
+      $group->save();
+
+      if($hide == 1) {
+        Flash::success('Group has been hidden.');
+      } else {
+        Flash::success('Group has been shown.');
+      }
+      return ['hidden' => $hide, 'id' => $group->id];
     }
 
     public function onOrderGroups()
@@ -100,7 +129,7 @@ class Projects extends Controller
     {
       $id = Request::input('id');
       $this->vars['project'] = ProjectsModel::find($id);
-      $this->vars['groups'] = TaskGroupsModel::where('project', $id)->orderBy('order','ASC')->get();
+      $this->vars['groups'] = TaskGroupsModel::visible()->fromProject($id)->orderBy('order','ASC')->get();
     }
 
     public function onAddProject()
@@ -110,7 +139,7 @@ class Projects extends Controller
 
       $project = ProjectsModel::addProject($data);
 
-      TaskGroupsModel::addGroup(['name' => 'Backlog', 'project' => $project->id]);
+      TaskGroupsModel::saveGroup(['name' => 'Backlog', 'project' => $project->id]);
 
       Flash::success('Project has been created.');
 

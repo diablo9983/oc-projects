@@ -1,5 +1,6 @@
 <?php namespace BootstrapHunter\Projects\Controllers;
 
+use Flash;
 use Request;
 use BackendMenu;
 use Backend\Classes\Controller;
@@ -81,6 +82,7 @@ class Projects extends Controller
       $data['project'] = Request::input('project_id');
       TaskGroupsModel::addGroup($data);
 
+      Flash::success('Group has been added.');
       return true;
     }
 
@@ -88,6 +90,10 @@ class Projects extends Controller
     {
       $groups = Request::input('groups');
       TaskGroupsModel::updateOrder($groups);
+
+      Flash::success('Order has been updated.');
+
+      return true;
     }
 
     public function onGetGroups()
@@ -101,7 +107,12 @@ class Projects extends Controller
     {
       $data['name'] = Request::input('name');
       $data['description'] = Request::input('description');
-      ProjectsModel::addProject($data);
+
+      $project = ProjectsModel::addProject($data);
+
+      TaskGroupsModel::addGroup(['name' => 'Backlog', 'project' => $project->id]);
+
+      Flash::success('Project has been created.');
 
       return true;
     }
@@ -113,6 +124,8 @@ class Projects extends Controller
       $data['description'] = Request::input('description');
       ProjectsModel::editProject($id,$data);
 
+      Flash::success('Project has been updated.');
+
       return true;
     }
 
@@ -121,18 +134,28 @@ class Projects extends Controller
       $id = Request::input('id');
       ProjectsModel::deleteProject($id);
 
+      Flash::success('Project has been deleted.');
+
       return true;
     }
 
-    public function onAddTask()
+    public function onSaveTask()
     {
+      if(Request::input('id')) $data['id'] = Request::input('id');
       $data['name'] = Request::input('name');
       $data['description'] = Request::input('description');
-      $data['group_id'] = Request::input('group_id');
-      $task = TaskModel::addTask($data);
+      if(Request::input('group_id')) $data['group_id'] = Request::input('group_id');
+      $task = TaskModel::saveTask($data);
 
-      return ['group' => $task['group_id'], 'task' => $this->makePartial('task', ['task' => $task['task']])];
+      if(Request::input('id')) {
+        Flash::success('Task has been updated.');
+        return ['#task-'.$task->id => $this->makePartial('task', ['task' => $task])];
+      } else {
+        Flash::success('Task has been created.');
+        return ['group' => $task->task_groups_id, 'task' => '<div class="task" id="task-'.$task->id.'" data-id="'.$task->id.'">'.$this->makePartial('task', ['task' => $task]).'</div>'];
+      }
     }
+
 
     public function onTasksSave()
     {

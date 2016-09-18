@@ -21,7 +21,7 @@ class Projects extends Model
       $project->description = $data['description'];
       $project->save();
 
-      return true;
+      return $project;
     }
 
     public static function editProject($id, $data)

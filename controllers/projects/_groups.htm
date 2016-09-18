@@ -10,7 +10,15 @@
                  class="oc-icon-plus"
                  data-handler="onOpenAddTaskForm"
                  data-extra-data="group_id:<?= $group->id; ?>"
-                 data-control="popup">Add Task</a></li>
+                 data-control="popup">Add Task</a>
+            </li>
+            <li>
+              <a href="#"
+                class="oc-icon-eye"
+                data-request="onDeleteGroup"
+                data-request-data="id:<?= $group->id; ?>"
+                data-request-confirm="Are you really want to hide column?">Hide Group</a>
+            </li>
           </ul>
         </div>
         <h3><?= $group->name; ?></h3>
@@ -18,7 +26,9 @@
       <div data-group-id="<?= $group->id; ?>" class="<?php if($group->task->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
         <?php if(!$group->task->isEmpty()): ?>
           <?php foreach ($group->task as $task): ?>
-            <?= $this->makePartial('task', ['task' => $task]); ?>
+            <div class="task" id="task-<?= $task->id; ?>" data-id="<?= $task->id; ?>">
+              <?= $this->makePartial('task', ['task' => $task]); ?>
+            </div>
           <?php endforeach; ?>
         <?php else: ?>
           <div class="task-placeholder-empty" data-id="0"></div>

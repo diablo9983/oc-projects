@@ -106,10 +106,13 @@ function updatePlaceholder(list)
   }
 }
 
-function addTask(el, data)
+function saveTask(el, data, update)
 {
-  $('#tasks-'+data.group).append(data.task)
-  updatePlaceholder($('#tasks-'+data.group))
+  update = update || true;
+  if(update) {
+    $('#tasks-'+data.group).append(data.task)
+    updatePlaceholder($('#tasks-'+data.group))
+  }
   if(typeof el !== 'undefined') {
     $(el).parents('.modal').trigger('close.oc.popup')
   }

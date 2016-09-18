@@ -1,5 +1,10 @@
-<div class="task" data-id="<?= $task->id; ?>">
-  <h4 class="handler">
+<div class="task-inner">
+  <h4>
+    <a href="javascript:;"
+       class="edit pull-right"
+       data-handler="onOpenAddTaskForm"
+       data-extra-data="id: <?= $task->id; ?>"
+       data-control="popup"><i class="icon-pencil"></i></a>
     <strong>T<?= $task->id; ?></strong>
     <a href="#"><?= $task->name; ?></a>
   </h4>

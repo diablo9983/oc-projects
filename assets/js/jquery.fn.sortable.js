@@ -989,7 +989,7 @@
 					return el;
 				}
 			}
-			while (el = ('host' in el) ? el.host : el.parentNode)
+			while (el = /*('host' in el) ? el.host :*/ el.parentNode)
 		}
 
 		return null;
@@ -1188,6 +1188,8 @@
 
 			var tag = selector.shift().toUpperCase(),
 				re = new RegExp('\\s(' + selector.join('|') + ')(?=\\s)', 'g');
+
+			if(typeof el === 'string') return false;
 
 			return (
 				(tag === '' || el.nodeName.toUpperCase() == tag) &&

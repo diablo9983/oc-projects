@@ -2,7 +2,9 @@
 
 use Flash;
 use Request;
+use Response;
 use BackendMenu;
+use Backend\Models\User;
 use Backend\Classes\Controller;
 use BootstrapHunter\Projects\Models\Projects as ProjectsModel;
 use BootstrapHunter\Projects\Models\Task as TaskModel;
@@ -21,6 +23,8 @@ class Projects extends Controller
         $this->pageTitle = 'bootstraphunter.projects::lang.plugin.projects';
 
         $this->addCss('/plugins/bootstraphunter/projects/assets/css/projects.css', 'BootstrapHunter.Projects');
+        $this->addCss('/plugins/bootstraphunter/projects/assets/css/selectize.css', 'BootstrapHunter.Projects');
+        $this->addJs('/plugins/bootstraphunter/projects/assets/js/selectize.js', 'BootstrapHunter.Projects');
         $this->addJs('/plugins/bootstraphunter/projects/assets/js/projects.js', 'BootstrapHunter.Projects');
     }
 
@@ -38,7 +42,7 @@ class Projects extends Controller
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/tasks.js', 'BootstrapHunter.Projects');
 
       $this->vars['project'] = ProjectsModel::find($id);
-      $this->vars['groups'] = TaskGroupsModel::visible()->fromProject($id)->orderBy('order','ASC')->get();
+      $this->vars['groups'] = ProjectsModel::find($id)->groups()->visible()->orderBy('order','ASC')->get();
     }
 
     public function onOpenAddProjectForm()
@@ -47,6 +51,7 @@ class Projects extends Controller
       if(Request::input('id')) {
         $data['id'] = Request::input('id');
         $data['project'] = ProjectsModel::find(Request::input('id'));
+        $data['users'] = ProjectsModel::find(Request::input('id'))->user;
       }
       return $this->makePartial('addProjectForm', $data);
     }
@@ -134,34 +139,41 @@ class Projects extends Controller
 
     public function onAddProject()
     {
-      $data['name'] = Request::input('name');
-      $data['description'] = Request::input('description');
+      $id = Request::input('id') ? Request::input('id') : 0;
 
-      $project = ProjectsModel::addProject($data);
+      if($id) {
+        $project = ProjectsModel::find($id);
+      } else {
+        $project = new ProjectsModel;
+      }
+      $project->name = Request::input('name');
+      $project->description = Request::input('description');
+      $project->save();
 
-      TaskGroupsModel::saveGroup(['name' => 'Backlog', 'project' => $project->id]);
+      if(!$id) {
+        $task = new TaskGroupsModel(['name' => 'Backlog']);
+        $project->groups()->save($task);
+      }
 
-      Flash::success('Project has been created.');
+      if($id) {
+        $project->user()->detach();
+      }
 
-      return true;
-    }
+      if(Request::input('team') != '') {
+        $team = explode(',',Request::input('team'));
+        foreach($team as $user_id) {
+          User::find($user_id)->project()->save($project);
+        }
+      }
 
-    public function onEditProject()
-    {
-      $id = Request::input('id');
-      $data['name'] = Request::input('name');
-      $data['description'] = Request::input('description');
-      ProjectsModel::editProject($id,$data);
-
-      Flash::success('Project has been updated.');
+      Flash::success('Project has been '.($id ? 'updated' : 'created').'.');
 
       return true;
     }
 
     public function onDeleteProject()
     {
-      $id = Request::input('id');
-      ProjectsModel::deleteProject($id);
+      ProjectsModel::destroy(Request::input('id'));
 
       Flash::success('Project has been deleted.');
 
@@ -201,5 +213,25 @@ class Projects extends Controller
     public function onGetProjectList()
     {
       $this->vars['projects'] = ProjectsModel::all();
+    }
+
+    public function onGetUsers()
+    {
+      $query = Request::input('query');
+
+      $q = User::where('first_name','like','%'.$query.'%')
+             ->orWhere('last_name','like','%'.$query.'%')
+             ->orWhere('login','like','%'.$query.'%')
+             ->where('is_activated',1)
+             ->get();
+
+      $users = array();
+      foreach($q as $user) {
+        $name = trim($user->first_name.' '.$user->last_name);
+        $name = $user->login.($name != '' ? ' ('.$name.')' : '');
+        array_push($users, ['id' => $user->id, 'name' => $name]);
+      }
+
+      return Response::json($users);
     }
 }

@@ -2,12 +2,22 @@
   $request = 'onAddProject';
   $name = $description = $request_data = '';
   $title = 'Add Project';
+  $users_input = '';
   if(isset($id)) {
-    $request = 'onEditProject';
     $request_data = 'data-request-data="id:'.$id.'" ';
     $title = 'Edit Project';
     $name = $project->name;
     $description = $project->description;
+
+    if(!$users->isEmpty()) {
+      $users_array = [];
+      foreach($users as $user) {
+        $username = trim($user->first_name.' '.$user->last_name);
+        $username = $user->login.($username != '' ? ' ('.$username.')' : '');
+        array_push($users_array, ['id' => $user->id, 'name' => $username]);
+      }
+      $users_input = '<div class="hidden" id="fill-selectize">'.json_encode($users_array).'</div>';
+    }
   }
 ?>
 <form
@@ -28,6 +38,11 @@
     <div class="form-group">
       <label>Project description</label>
       <textarea class="form-control" name="description"><?=$description; ?></textarea>
+    </div>
+    <div class="form-group">
+      <label>Team members</label>
+      <?= $users_input; ?>
+      <input type="text" name="team" id="team">
     </div>
   </div>
   <div class="modal-footer">

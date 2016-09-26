@@ -10,34 +10,23 @@ class Projects extends Model
       'name'        => 'required'
     ];
 
-    protected $dates = ['created_at'];
+    protected $dates = ['created_at','updated_at'];
 
     public $table = 'bootstraphunter_projects_projects';
 
-    public static function addProject($data)
-    {
-      $project = new Projects;
-      $project->name = $data['name'];
-      $project->description = $data['description'];
-      $project->save();
+    public $belongsToMany = [
+      'user' => [
+        'Backend\Models\User',
+        'table' => 'bootstraphunter_projects_project_user',
+        'key' => 'project_id'
+      ]
+    ];
 
-      return $project;
-    }
-
-    public static function editProject($id, $data)
-    {
-      $project = Projects::find($id);
-      $project->name = $data['name'];
-      $project->description = $data['description'];
-      $project->save();
-
-      return true;
-    }
-
-    public static function deleteProject($id)
-    {
-      Projects::destroy($id);
-
-      return true;
-    }
+    public $hasMany = [
+      'groups' => [
+        'BootstrapHunter\Projects\Models\TaskGroups',
+        'key' => 'project_id',
+        'otherKey' => 'id'
+      ]
+    ];
 }

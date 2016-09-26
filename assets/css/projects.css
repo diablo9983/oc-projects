@@ -76,15 +76,18 @@
   text-align: center;
   display: inline-block;
 }
+
+.projects .project .menu > a:hover,
 .projects .project .menu.open > a {
-  border-bottom-color: #fff;
-}
-.projects .project .menu:not(.open) > a:hover {
   background-color: #fafafa;
 }
 .projects .project .menu > a i:before {
   margin: 0;
 }
+.projects .project .menu .dropdown-menu {
+  margin-right: -7px;
+}
+/*
 .projects .project .menu .dropdown-menu {
   min-width: 100px;
   z-index: 9;
@@ -98,6 +101,7 @@
   font-size: 12px;
   padding: 5px 15px;
 }
+*/
 .projects .project .created,
 .projects .project .updated {
   font-size: 12px;

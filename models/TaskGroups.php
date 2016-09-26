@@ -13,9 +13,15 @@ class TaskGroups extends Model
     ]
   ];
 
+  public $belongsTo = [
+    'project' => 'BootstrapHunter\Projects\Models\Projects'
+  ];
+
   public $casts = [
     'hidden' => 'boolean'
   ];
+
+  protected $fillable = ['name'];
 
   public $rules = [
     'name' => 'required'
@@ -62,7 +68,7 @@ class TaskGroups extends Model
 
   public function scopeFromProject($query, $id)
   {
-    return $query->where('project', $id);
+    return $query->where('project_id', $id);
   }
 
 }

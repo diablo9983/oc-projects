@@ -218,6 +218,17 @@
 .tasks-group-header .menu > a:hover {
   color: #fff !important;
 }
+.tasks-group-header .count {
+  font-size: 14px;
+  background-color: #fff;
+  color: #666;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+  padding: 5px 5px 3px;
+  border-radius: 3px;
+  margin-top: -3px;
+}
 .tasks-group-content {
   padding: 10px 10px 10px;
   margin-bottom: 10px;

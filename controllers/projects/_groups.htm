@@ -22,7 +22,7 @@
             </li>
           </ul>
         </div>
-        <h3><i class="oc-icon-<?= $group->icon; ?>"></i><?= $group->name; ?></h3>
+        <h3><i class="oc-icon-<?= $group->icon; ?>"></i><?= $group->name; ?> <span class="count"><?= $group->task->count(); ?></span></h3>
       </div>
       <div data-group-id="<?= $group->id; ?>" class="<?php if($group->task->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
         <?php if(!$group->task->isEmpty()): ?>

@@ -10,6 +10,8 @@ $(document).ready(function() {
       $('#fill-selectize').remove()
     }
     $('#team').selectize({
+      plugins: ['remove_button'],
+      persist: false,
       valueField: 'id',
       labelField: 'name',
       searchField: 'name',

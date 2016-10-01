@@ -11,6 +11,11 @@
   padding: 10px 10px;
   position: relative;
 }
+#projects {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+}
 
 .projects .no-projects {
   text-align: center;
@@ -31,13 +36,10 @@
 
 .projects .project {
   background-color: #fff;
-  display: inline-block;
-  margin: 10px;
-  vertical-align: top;
+  width: 24%;
+  margin: 5px .5%;
   border: 1px solid #ddd;
   padding: 20px;
-  height: 155px;
-  width: 300px;
   position: relative;
 }
 
@@ -497,4 +499,28 @@
 }
 .ico-chooser span i {
   font-size: 20px;
+}
+
+
+@media (max-width: 480px) {
+  .projects .project {
+    width: 99%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .projects .project {
+    width: 49%;
+  }
+}
+@media (min-width: 769px) and (max-width: 991px) {
+  .projects .project {
+    width: 32.33%;
+  }
+}
+
+@media (min-width: 1600px) {
+  .projects .project {
+    width: 19%;
+  }
 }

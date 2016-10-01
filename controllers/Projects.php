@@ -1,6 +1,7 @@
 <?php namespace BootstrapHunter\Projects\Controllers;
 
 use Flash;
+use Backend;
 use Request;
 use Response;
 use BackendMenu;
@@ -41,8 +42,12 @@ class Projects extends Controller
       //$this->addJs('/plugins/bootstraphunter/projects/assets/js/selectize.js', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/tasks.js', 'BootstrapHunter.Projects');
 
-      $this->vars['project'] = ProjectsModel::find($id);
-      $this->vars['groups'] = ProjectsModel::find($id)->groups()->visible()->orderBy('order','ASC')->get();
+      if(($project = ProjectsModel::find($id)) === null) {
+        Flash::error('Invalid project');
+        return Response::redirectTo(Backend::url('bootstraphunter/projects/projects'));
+      }
+      $this->vars['project'] = $project;
+      $this->vars['groups'] = $project->groups()->visible()->orderBy('order','ASC')->get();
     }
 
     public function onOpenAddProjectForm()

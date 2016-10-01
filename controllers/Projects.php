@@ -157,7 +157,7 @@ class Projects extends Controller
 
     public function onAddProject()
     {
-      $id = Request::input('id') ? Request::input('id') : 0;
+      $id = Request::input('id' ,0);
 
       if($id) {
         $project = ProjectsModel::find($id);
@@ -218,8 +218,8 @@ class Projects extends Controller
 
     public function onTasksSave()
     {
-      $group_id = (int) Request::input('group');
-      $tasks = (array) Request::input('tasks');
+      $group_id = Request::input('group');
+      $tasks = Request::input('tasks');
 
       $i = 0;
       foreach($tasks as $task) {

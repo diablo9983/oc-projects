@@ -123,7 +123,6 @@
   overflow: hidden;
 }
 .tasks-groups {
-  height: 100%;
   padding: 0;
   white-space: nowrap;
   overflow-x: auto;
@@ -143,39 +142,70 @@
 .tasks-group {
   white-space: normal;
   width: 300px;
-  margin: 20px 10px 19px;
-  border-radius: 5px;
+  height: 100%;
+  margin-left: -4px;
   display: inline-block;
   vertical-align: top;
-  background-color: #ecf0f1;
+  background-color: #EBF0F2;
 }
-.tasks-group:first-child {
-  margin-left: 20px;
-}
-.tasks-group:last-child {
-  margin-right: 20px;
+.tasks-group:nth-child(2n) {
+  background-color: #F5F7F8;
 }
 .tasks-group-header {
   position: relative;
 }
+.tasks-group-header.turquoise {
+  background-color: #1abc9c;
+}
+.tasks-group-header.green {
+  background-color: #2ecc71;
+}
+.tasks-group-header.blue {
+  background-color: #3498db;
+}
+.tasks-group-header.purple {
+  background-color: #9b59b6;
+}
+.tasks-group-header.dark {
+  background-color: #34495e;
+}
+.tasks-group-header.yellow {
+  background-color: #f1c40f;
+}
+.tasks-group-header.orange {
+  background-color: #e67e22;
+}
+.tasks-group-header.red {
+  background-color: #e74c3c;
+}
+.tasks-group-header.grey {
+  background-color: #95a5a6;
+}
+
+
+
 .tasks-group-header h3 {
   font-size: 16px;
   font-weight: bold;
   margin: 0;
-  color: #666;
+  color: #fff;
   white-space: nowrap;
   overflow: hidden;
-  padding: 13px 15px 10px;
+  padding: 12px 20px 9px;
+}
+.tasks-group-header h3 i {
+  font-size: 22px;
+  vertical-align: middle;
 }
 .tasks-group-header .menu {
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 5px;
+  top: 3px;
 }
 .tasks-group-header .menu > a {
   line-height: 40px;
   width: 30px;
-  color: #bbb;
+  color: rgba(255,255,255,0.5);
   display: block;
   text-align: center;
 }
@@ -184,17 +214,18 @@
   right: -3px;
 }
 .tasks-group:hover .tasks-group-header .menu > a {
-  color: #888;
+  color: rgba(255,255,255,0.75);
 }
 .tasks-group-header .menu > a:hover {
-  color: #555 !important;
+  color: #fff !important;
 }
 .tasks-group-content {
-  padding: 0 10px 1px;
+  padding: 10px 10px 10px;
   margin-bottom: 10px;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+  height: calc(100% - 40px);
 }
 .tasks-group-content-empty {
   height: 59px;
@@ -239,7 +270,7 @@
   background-color: rgba(255,255,255,0.7);
   border: 0;
   height: 48px;
-  top: 0 !important;
+  top: 10px !important;
   position: absolute;
   left: 11px !important;
   width: calc(100% - 22px);
@@ -248,7 +279,7 @@
   height: 48px;
   position: absolute;
   width: calc(100% - 20px);
-  top: 0;
+  top: 10px;
   left: 10px;
   border-radius: 5px;
 }
@@ -368,4 +399,92 @@
   border-left-color: rgba(0,0,0,.15) !important;
   padding: 1px 5px;
   width: 20px;
+}
+
+.color-chooser {
+  cursor: default;
+}
+.color-chooser label {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+}
+.color-chooser label + label {
+  margin-left: 5px;
+}
+.color-chooser input[type=radio],
+.ico-chooser input[type=radio] {
+  display: none;
+}
+.color-chooser span {
+  width: 7px;
+  height: 7px;
+  margin-top: 10px;
+  display: inline-block;
+  border-radius: 50%;
+
+  -webkit-transition: width 0.1s ease-in-out, height 0.1s ease-in-out, margin 0.1s ease-in-out;
+  -o-transition: width 0.1s ease-in-out, height 0.1s ease-in-out, margin 0.1s ease-in-out;
+  transition: width 0.1s ease-in-out, height 0.1s ease-in-out, margin 0.1s ease-in-out;
+}
+.color-chooser input[type=radio]:checked + span {
+  margin: 0;
+  width: 25px;
+  height: 25px;
+}
+.color-chooser label.turquoise > span,
+.ico-chooser.turquoise input[type=radio]:checked + span {
+  background-color: #1abc9c;
+}
+.color-chooser label.green > span,
+.ico-chooser.green input[type=radio]:checked + span {
+  background-color: #2ecc71;
+}
+.color-chooser label.blue > span,
+.ico-chooser.blue input[type=radio]:checked + span {
+  background-color: #3498db;
+}
+.color-chooser label.purple > span,
+.ico-chooser.purple input[type=radio]:checked + span {
+  background-color: #9b59b6;
+}
+.color-chooser label.dark > span,
+.ico-chooser.dark input[type=radio]:checked + span {
+  background-color: #34495e;
+}
+.color-chooser label.yellow > span,
+.ico-chooser.yellow input[type=radio]:checked + span {
+  background-color: #f1c40f;
+}
+.color-chooser label.orange > span,
+.ico-chooser.orange input[type=radio]:checked + span {
+  background-color: #e67e22;
+}
+.color-chooser label.red > span,
+.ico-chooser.red input[type=radio]:checked + span {
+  background-color: #e74c3c;
+}
+.color-chooser label.grey > span,
+.ico-chooser.grey input[type=radio]:checked + span {
+  background-color: #95a5a6;
+}
+
+.ico-chooser input[type=radio]:checked + span {
+  color: #fff;
+}
+.ico-chooser span {
+  cursor: pointer;
+  display: block;
+  text-align: center;
+  width: 32px;
+  height: 32px;
+  line-height: 38px;
+  background-color: #ddd;
+  border-radius: 50%;
+}
+.ico-chooser span i {
+  font-size: 20px;
 }

@@ -1,4 +1,10 @@
 <?php
+  $colors = ['red','orange','yellow','green','turquoise','blue','purple','dark','grey'];
+  $selected_color = 'grey';
+
+  $icons = ['check', 'check-circle', 'lightbulb-o','bug','hourglass-2','support','times-circle','question','question-circle','question-circle-o','home','plane','plug',
+            'paper-plane','paw','puzzle-piece','recycle','refresh','reorder','shield','star','tv','gears','hashtag','heart','feed','database','cube','book','bell'];
+  $selected_icon = '';
   $name = '';
   $request_data = 'data-request-data="';
   $title = 'Add Group';
@@ -6,6 +12,8 @@
     $request_data .= 'id:'.$id;
     $title = 'Edit Group';
     $name = $group->name;
+    $selected_color = $group->color;
+    $selected_icon = $group->icon;
   } else {
     $request_data .= 'project_id:'.$project_id;
   }
@@ -25,6 +33,30 @@
     <div class="form-group">
       <label>Group name</label>
       <input class="form-control" name="name" value="<?= $name; ?>" type="text">
+    </div>
+    <div class="form-group">
+      <label>Choose icon</label>
+      <div class="ico-chooser <?= $selected_color; ?>">
+        <?php foreach($icons as $icon): ?>
+          <label class="icon" data-container="body" data-placement="top" data-toggle="tooltip" title="<?= $icon; ?>">
+            <input type="radio" name="icon" value="<?= $icon; ?>" <?php if($icon === $selected_icon) { echo 'checked'; } ?>>
+            <span>
+              <i class="icon-<?= $icon; ?>"></i>
+            </span>
+          </label>
+        <?php endforeach; ?>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Choose color</label>
+      <div class="color-chooser">
+        <?php foreach($colors as $color): ?>
+          <label data-toggle="tooltip" data-placement="top" data-container="body" title="<?= $color; ?>" class="<?= $color; ?>">
+            <input value="<?= $color; ?>" name="color" type="radio" <?php if($color === $selected_color) { echo 'checked'; } ?>>
+            <span></span>
+          </label>
+        <?php endforeach; ?>
+      </div>
     </div>
   </div>
   <div class="modal-footer">

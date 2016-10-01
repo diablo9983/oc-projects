@@ -17,7 +17,10 @@ $(document).ready(function() {
     initGroups()
     $('.loading .loading-indicator-container').hide()
   }).on('mousedown','.tasks-groups', function(e) {
-    if(!$(e.target).is('.tasks-groups')) return
+    if($(e.target).is('.menu') ||
+      $(e.target).parents('.menu').length > 0 ||
+      $(e.target).is('.task') ||
+      $(e.target).parents('.task').length > 0) return
 
     clicked = true
     originLeft = e.pageX
@@ -32,6 +35,13 @@ $(document).ready(function() {
     $('.tasks-groups').removeClass('moving')
   })
 
+  $(document).on('change','input[name="color"]', function() {
+    var color = $(this).val(),
+        old_color = $('.ico-chooser').attr('class').replace('ico-chooser ', '')
+
+    $('.ico-chooser').toggleClass(color + ' ' + old_color)
+  })
+
   $(document).on('click', '#groups-order .edit-group', function() {
     $(this).closest('.control-popup').trigger('close.oc.popup')
   })
@@ -42,8 +52,8 @@ $(document).ready(function() {
 
 function setTasksHeight()
 {
-  var h = $(window).height() - ($('#layout-mainmenu').height() + $('.control-toolbar').not('#layout-mainmenu').height() + $('.control-breadcrumb').height() + 135)
-  $('.tasks-group-content').css({maxHeight: h + 'px'})
+  var h = $(window).height() - ($('#layout-mainmenu').outerHeight() + $('.control-toolbar').not('#layout-mainmenu').outerHeight() + $('.control-breadcrumb').outerHeight())
+  $('.tasks-groups').css({height: h + 'px'})
 }
 
 function initGroups()

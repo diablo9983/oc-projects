@@ -22,8 +22,8 @@ class Projects extends Controller
         $this->bodyClass = 'compact-container';
         $this->pageTitle = 'bootstraphunter.projects::lang.plugin.projects';
 
-        $this->addCss('/plugins/bootstraphunter/projects/assets/css/projects.css', 'BootstrapHunter.Projects');
         $this->addCss('/plugins/bootstraphunter/projects/assets/css/selectize.css', 'BootstrapHunter.Projects');
+        $this->addCss('/plugins/bootstraphunter/projects/assets/css/projects.css', 'BootstrapHunter.Projects');
         $this->addJs('/plugins/bootstraphunter/projects/assets/js/selectize.js', 'BootstrapHunter.Projects');
         $this->addJs('/plugins/bootstraphunter/projects/assets/js/projects.js', 'BootstrapHunter.Projects');
     }
@@ -85,12 +85,30 @@ class Projects extends Controller
 
     public function onSaveGroup()
     {
-      if(Request::input('id')) $data['id'] = Request::input('id');
-      $data['name'] = Request::input('name');
-      if(Request::input('project_id')) $data['project'] = Request::input('project_id');
-      TaskGroupsModel::saveGroup($data);
+      $id = Request::input('id', 0);
+      $project = Request::input('project_id', 0);
 
-      if(Request::input('id')) {
+      if($id) {
+        $group = TaskGroupsModel::find($id);
+      } else {
+        $group = new TaskGroupsModel;
+      }
+
+      $group->name = Request::input('name');
+      $group->color = Request::input('color');
+      $group->icon = Request::input('icon');
+
+      if($project) {
+        $order = TaskGroupsModel::fromProject($project)->orderBy('order','desc')->first();
+        $order = is_null($order) ? 0 : $order->order + 1;
+
+        $group->project = $project;
+        $group->order   = $order;
+      }
+
+      $group->save();
+
+      if($id) {
         Flash::success('Group has been updated.');
       } else {
         Flash::success('Group has been added.');

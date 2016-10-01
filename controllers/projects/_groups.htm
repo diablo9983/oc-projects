@@ -1,7 +1,7 @@
 <div class="tasks-groups">
   <?php foreach($groups as $group): ?>
     <div class="tasks-group">
-      <div class="tasks-group-header">
+      <div class="tasks-group-header <?= $group->color; ?>">
         <div class="menu dropdown">
           <a href="javascript:;" data-toggle="dropdown"><i class="oc-icon-caret-down"></i></a>
           <ul class="dropdown-menu pull-right">
@@ -22,7 +22,7 @@
             </li>
           </ul>
         </div>
-        <h3><?= $group->name; ?></h3>
+        <h3><i class="oc-icon-<?= $group->icon; ?>"></i><?= $group->name; ?></h3>
       </div>
       <div data-group-id="<?= $group->id; ?>" class="<?php if($group->task->isEmpty()): ?>tasks-group-content-empty <?php endif; ?>tasks-group-content" id="tasks-<?= $group->id; ?>">
         <?php if(!$group->task->isEmpty()): ?>

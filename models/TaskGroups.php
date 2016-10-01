@@ -39,28 +39,6 @@ class TaskGroups extends Model
     return true;
   }
 
-  public static function saveGroup($data)
-  {
-    if(isset($data['id'])) {
-      $group = TaskGroups::find($data['id']);
-    } else {
-      $group = new TaskGroups;
-    }
-    if(isset($data['project'])) {
-      $order = static::where('project',$data['project'])->orderBy('order','desc')->first();
-      $order = is_null($order) ? 0 : $order->order + 1;
-
-      $group->project = $data['project'];
-      $group->order   = $order;
-    }
-
-    $group->name = $data['name'];
-
-    $group->save();
-
-    return $group;
-  }
-
   public function scopeVisible($query)
   {
     return $query->where('hidden', 0);

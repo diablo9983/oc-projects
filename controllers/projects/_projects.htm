@@ -8,14 +8,14 @@
             <a href="#"
                 data-handler="onOpenAddProjectForm"
                 data-extra-data="id: <?= $project->id; ?>"
-                data-control="popup">Edit Project</a>
+                data-control="popup"><i class="oc-icon-pencil"></i> Edit Project</a>
           </li>
           <li>
             <a href="#"
                 data-request="onDeleteProject"
                 data-request-data="id: <?= $project->id; ?>"
                 data-request-confirm="Are you sure? All tasks in this project will also be deleted."
-                data-request-success="refreshProjects()">Delete Project</a></li>
+                data-request-success="refreshProjects()"><i class="oc-icon-trash"></i> Delete Project</a></li>
         </ul>
       </div>
       <h3><a href="<?= Backend::url('bootstraphunter/projects/projects/view/'.$project->id); ?>"><?= $project->name; ?></a></h3>

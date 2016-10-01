@@ -191,7 +191,14 @@ class Projects extends Controller
 
     public function onDeleteProject()
     {
-      ProjectsModel::destroy(Request::input('id'));
+      $project = ProjectsModel::find(Request::input('id'));
+
+      foreach($project->groups as $group) {
+        $group->task()->delete();
+        $group->delete();
+      }
+
+      $project->delete();
 
       Flash::success('Project has been deleted.');
 

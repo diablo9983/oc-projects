@@ -18,8 +18,15 @@
                 data-request-success="refreshProjects()">Delete Project</a></li>
         </ul>
       </div>
-      <h3><a href="<?=Backend::url('bootstraphunter/projects/projects/view/'.$project->id); ?>"><?= $project->name; ?></a></h3>
+      <h3><a href="<?= Backend::url('bootstraphunter/projects/projects/view/'.$project->id); ?>"><?= $project->name; ?></a></h3>
       <p><?= $project->description; ?></p>
+      <div class="members">
+        <?php foreach($project->user as $user): ?>
+          <div class="user" data-toggle="tooltip" title="<?= $user->login; ?>" data-placement="top">
+            <img src="<?= $user->getAvatarThumb(20, ['mode' => 'crop', 'extension' => 'png']); ?>" alt="<?= $user->login; ?>" />
+          </div>
+        <?php endforeach; ?>
+      </div>
       <span class="created text-muted">
         <?= $project->updated_at ? 'Updated on '.$project->updated_at : 'Created on '.$project->created_at; ?>
       </span>

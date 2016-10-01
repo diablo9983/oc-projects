@@ -219,13 +219,17 @@ class Projects extends Controller
     public function onTasksSave()
     {
       $group_id = Request::input('group');
-      $tasks = Request::input('tasks');
+      $tasks = Request::input('tasks',[]);
 
       $i = 0;
       foreach($tasks as $task) {
         TaskModel::where('id',$task)->update(['task_groups_id' => $group_id, 'order' => $i]);
         $i++;
       }
+
+      return [
+        '#header-tasks-'.$group_id.' .count' => TaskGroupsModel::find($group_id)->task()->count()
+      ];
     }
 
     public function onGetProjectList()

@@ -1,7 +1,7 @@
 <div class="tasks-groups">
   <?php foreach($groups as $group): ?>
     <div class="tasks-group">
-      <div class="tasks-group-header <?= $group->color; ?>">
+      <div class="tasks-group-header <?= $group->color; ?>" id="header-tasks-<?= $group->id; ?>">
         <div class="menu dropdown">
           <a href="javascript:;" data-toggle="dropdown"><i class="oc-icon-caret-down"></i></a>
           <ul class="dropdown-menu pull-right">

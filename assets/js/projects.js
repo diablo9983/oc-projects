@@ -1,39 +1,30 @@
 $(document).ready(function() {
 
   $(window).on('show.oc.popup', function(e) {
-    var items = [], selected = []
-    if($('#fill-selectize').length > 0) {
-      items = $.parseJSON($('#fill-selectize').text());
-      $.each(items,function(index, value) {
-        selected.push(value.id)
-      })
-      $('#fill-selectize').remove()
-    }
-    $('#team').selectize({
-      plugins: ['remove_button'],
-      persist: false,
-      valueField: 'id',
-      labelField: 'name',
-      searchField: 'name',
-      sortField: 'name',
-      hideSelected: true,
-      highlight: false,
-      options: items,
-      items: selected,
-      create: false,
-      load: function(query, callback) {
-        if (!query.length) return callback();
-        $.request('onGetUsers', {
-          data: {
-            query: query
-          },
-          success: function(data) {
-            callback(data)
+    $('#team').select2({
+      placeholder: 'Pick an user',
+      width: 'auto',
+      minimumInputLength: 3,
+      ajax: {
+        delay: 300,
+        transport: function(params, success, error) {
+          $.request('onGetUsers', {
+            data: {
+              query: params.data.term
+            },
+            success: success,
+            error: error
+          })
+        },
+        processResults: function(data) {
+          return {
+            results: $.map(data, function(el) { return el })
           }
-        })
+        }
       }
     })
-
+  }).on('close.oc.popup', function() {
+    $('#team').select2('destroy')
   })
 
 })

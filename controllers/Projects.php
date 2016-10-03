@@ -182,8 +182,7 @@ class Projects extends Controller
         $project->user()->detach();
       }
 
-      if(Request::input('team') != '') {
-        $team = explode(',',Request::input('team'));
+      if(is_array($team = Request::input('team'))) {
         foreach($team as $user_id) {
           User::find($user_id)->project()->save($project);
         }
@@ -263,7 +262,7 @@ class Projects extends Controller
       foreach($q as $user) {
         $name = trim($user->first_name.' '.$user->last_name);
         $name = $user->login.($name != '' ? ' ('.$name.')' : '');
-        array_push($users, ['id' => $user->id, 'name' => $name]);
+        array_push($users, ['id' => $user->id, 'text' => $name]);
       }
 
       return Response::json($users);

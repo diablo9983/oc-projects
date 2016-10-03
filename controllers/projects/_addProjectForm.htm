@@ -2,22 +2,11 @@
   $request = 'onAddProject';
   $name = $description = $request_data = '';
   $title = 'Add Project';
-  $users_input = '';
   if(isset($id)) {
     $request_data = 'data-request-data="id:'.$id.'" ';
     $title = 'Edit Project';
     $name = $project->name;
     $description = $project->description;
-
-    if(!$users->isEmpty()) {
-      $users_array = [];
-      foreach($users as $user) {
-        $username = trim($user->first_name.' '.$user->last_name);
-        $username = $user->login.($username != '' ? ' ('.$username.')' : '');
-        array_push($users_array, ['id' => $user->id, 'name' => $username]);
-      }
-      $users_input = '<div class="hidden" id="fill-selectize">'.json_encode($users_array).'</div>';
-    }
   }
 ?>
 <form
@@ -41,8 +30,15 @@
     </div>
     <div class="form-group">
       <label>Team members</label>
-      <?= $users_input; ?>
-      <input type="text" name="team" id="team">
+      <select multiple name="team[]" id="team">
+        <?php if(isset($users) && !$users->isEmpty()): ?>
+          <?php foreach($users as $user):
+            $username = trim($user->first_name.' '.$user->last_name);
+            $username = $user->login.($username != '' ? ' ('.$username.')' : ''); ?>
+            <option selected value="<?= $user->id; ?>"><?= $username; ?></option>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </select>
     </div>
   </div>
   <div class="modal-footer">

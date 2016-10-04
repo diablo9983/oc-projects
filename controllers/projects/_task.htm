@@ -8,4 +8,12 @@
     <strong>T<?= $task->id; ?></strong>
     <a href="#"><?= $task->name; ?></a>
   </h4>
+  <?php if(!is_null($task->due_date)): ?>
+  <div class="due-date">
+    <span title="<?= $task->due_date; ?>">
+      <i class="icon-calendar-o"></i>
+      <?= $task->due_date->toFormattedDateString(); ?>
+    </span>
+  </div>
+  <?php endif; ?>
 </div>

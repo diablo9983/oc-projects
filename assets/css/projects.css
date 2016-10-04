@@ -319,6 +319,13 @@
 .task h4 strong {
   margin-right: 5px;
 }
+.task .due-date {
+  font-size: 12px;
+  color: #888;
+  padding: 0 10px 5px;
+}
+
+
 .task .edit,
 .list-group a {
   opacity: 0;
@@ -472,6 +479,103 @@
 .ico-chooser span i {
   font-size: 20px;
 }
+
+#editTask .modal-header {
+  border-bottom: 1px solid #e6e6e6;
+}
+#editTask .modal-body {
+  display: flex;
+  padding-right: 0;
+}
+#editTask .modal-footer {
+  border-top: 1px solid #e6e6e6;
+  padding-top: 20px;
+}
+#editTask .controls {
+  flex-grow: 2;
+  padding-top: 20px;
+}
+#editTask .sidebar {
+  width: 240px;
+  margin-left: 20px;
+  background-color: #f3f3f3;
+  border-left: 1px solid #e6e6e6;
+}
+#editTask .sidebar .sidebar-item {
+  padding: 10px 0 0 10px;
+}
+#editTask .field-datepicker {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+#editTask .sidebar .input {
+  display: inline-block;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+#editTask .sidebar i {
+  font-size: 24px;
+  color: #999;
+  width: 42px;
+  margin-left: 5px;
+}
+#editTask .sidebar label {
+  color: #666;
+  position: relative;
+  order: 1;
+  top: 1px;
+  left: 2px;
+  font-weight: bold;
+  font-size: 10px;
+  margin: 0;
+  cursor: pointer;
+}
+#editTask .sidebar input {
+  background-color: transparent;
+  border: 0;
+  color: #666;
+  font-weight: bold;
+  cursor: pointer;
+}
+#editTask .sidebar input[type="text"] {
+  order: 2;
+}
+#editTask .sidebar input[type="hidden"][value=""] ~ label {
+  position: absolute;
+  font-size: 14px;
+  top: 20px;
+}
+#editTask .sidebar input[type="hidden"][value=""] ~ label:before {
+  position: absolute;
+  right: -15px;
+  top: 6px;
+  content: '';
+  border-top: 5px solid #888;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+}
+#editTask .sidebar input[type="hidden"][value=""] + input[type="text"] {
+  margin: 7px 0;
+}
+#editTask .clear {
+  position: absolute;
+  right: 20px;
+  font-size: 18px;
+  top: 15px;
+  color: #888;
+  z-index: 10;
+  text-decoration: none;
+}
+
+#editTask .sidebar input[type="hidden"][value=""] ~ .clear {
+  display: none;
+}
+
+
 
 
 @media (max-width: 480px) {

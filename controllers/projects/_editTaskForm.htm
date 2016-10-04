@@ -1,0 +1,61 @@
+<form
+  id="editTask"
+  method="post"
+  action="#"
+  data-request-loading=".loading .loading-indicator-container"
+  data-request="onSaveTask"
+  data-request-data="id:<?= $id; ?>"
+  data-request-success="saveTask(this,data,false)">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="popup">×</button>
+    <h4 class="modal-title">Edit Task</h4>
+  </div>
+  <div class="modal-body">
+    <div class="controls">
+      <div class="form-group">
+        <label>Task name</label>
+        <input class="form-control" value="<?= $task->name; ?>" name="name" type="text">
+      </div>
+      <div class="form-group">
+        <label>Task description</label>
+        <textarea class="form-control" name="description"><?= $task->description; ?></textarea>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="sidebar-item">
+        <div
+          id="date"
+          class="field-datepicker"
+          data-control="datepicker">
+          <i class="icon-calendar-check-o"></i>
+          <div class="input">
+            <input
+              type="hidden"
+              name="due_date"
+              id="date-input"
+              value="<?= $task->due_date; ?>"
+              data-datetime-value />
+            <input
+              type="text"
+              id="date-choose"
+              autocomplete="off"
+              data-datepicker />
+            <label for="date-choose">Due Date</label>
+            <a href="javascript:;" title="Clear due date" class="clear">&times;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="loading">
+      <div class="loading-indicator-container">
+        <div class="loading-indicator size-small">
+          <span></span>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="button" class="btn btn-default" data-dismiss="popup">Cancel</button>
+  </div>
+</form>

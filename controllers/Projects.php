@@ -63,10 +63,12 @@ class Projects extends Controller
 
     public function onOpenAddTaskForm()
     {
+      $id = Request::input('id', 0);
       $data['group_id'] = Request::input('group_id');
-      if(Request::input('id')) {
-        $data['id'] = Request::input('id');
+      if($id) {
+        $data['id'] = $id;
         $data['task'] = TaskModel::find(Request::input('id'));
+        return $this->makePartial('editTaskForm', $data);
       }
       return $this->makePartial('addTaskForm', $data);
     }
@@ -211,13 +213,33 @@ class Projects extends Controller
 
     public function onSaveTask()
     {
-      if(Request::input('id')) $data['id'] = Request::input('id');
-      $data['name'] = Request::input('name');
-      $data['description'] = Request::input('description');
-      if(Request::input('group_id')) $data['group_id'] = Request::input('group_id');
-      $task = TaskModel::saveTask($data);
+      $id = Request::input('id', 0);
+      $group_id = Request::input('group_id', 0);
 
-      if(Request::input('id')) {
+      if($id) {
+        $task = TaskModel::find($id);
+      } else {
+        $task = new TaskModel;
+      }
+
+      $task->name = Request::input('name');
+      $task->description = Request::input('description');
+
+      if($group_id) {
+        $order = TaskModel::where('task_groups_id',$group_id)->orderBy('order','desc')->first();
+        $order = is_null($order) ? 0 : $order->order + 1;
+
+        $task->order = $order;
+        $task->task_groups_id = $group_id;
+      }
+
+      if($id) {
+        $task->due_date = Request::has('due_date') ? Request::input('due_date') : null;
+      }
+
+      $task->save();
+
+      if($id) {
         Flash::success('Task has been updated.');
         return ['#task-'.$task->id => $this->makePartial('task', ['task' => $task])];
       } else {

@@ -46,6 +46,10 @@ $(document).ready(function() {
     $(this).closest('.control-popup').trigger('close.oc.popup')
   })
 
+  $(document).on('click', '#date .clear', function() {
+    $('#date').datePicker('emptyValues')
+  })
+
   $(window).on('resize', setTasksHeight)
   setTasksHeight()
 })

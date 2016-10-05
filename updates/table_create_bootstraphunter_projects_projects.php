@@ -13,8 +13,8 @@ class TableCreateBootstraphunterProjectsProjects extends Migration
             $table->increments('id')->unsigned();
             $table->string('name', 255);
             $table->text('description');
-            $table->timestamp('created_at')->nullable()->default('NULL');
-            $table->timestamp('updated_at')->nullable()->default('NULL');
+            $table->timestamp('created_at')->nullable()->default(NULL);
+            $table->timestamp('updated_at')->nullable()->default(NULL);
         });
     }
 

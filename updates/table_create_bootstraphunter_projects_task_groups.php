@@ -17,8 +17,8 @@ class TableCreateBootstraphunterProjectsTaskGroups extends Migration
             $table->integer('project_id')->unsigned();
             $table->integer('order')->unsigned();
             $table->tinyInteger('hidden')->unsigned()->default(0);
-            $table->timestamp('created_at')->nullable()->default('NULL');
-            $table->timestamp('updated_at')->nullable()->default('NULL');
+            $table->timestamp('created_at')->nullable()->default(NULL);
+            $table->timestamp('updated_at')->nullable()->default(NULL);
         });
     }
 

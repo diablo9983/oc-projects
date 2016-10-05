@@ -249,6 +249,7 @@
   border-radius: 5px;
   margin-bottom: 1px;
   cursor: move;
+  position: relative;
 }
 .task a {
   color: #333;
@@ -323,6 +324,27 @@
   font-size: 12px;
   color: #888;
   padding: 0 10px 5px;
+}
+.task .user {
+  position: absolute;
+  bottom: 8px;
+  right: 7px;
+
+  -webkit-transition: right 0.15s ease-in-out;
+  -o-transition: right 0.15s ease-in-out;
+  transition: right 0.15s ease-in-out;
+}
+.task .user img {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.task:hover .user {
+  right: 35px;
+}
+
+.task .due-date + .user {
+  right: 7px !important;
 }
 
 

@@ -20,6 +20,16 @@
         <label>Task description</label>
         <textarea class="form-control" name="description"><?= $task->description; ?></textarea>
       </div>
+      <div class="form-group">
+        <label>Assigned to</label>
+        <select name="assignee" id="assignee">
+          <?php if($task->user):
+            $username = trim($task->user->first_name.' '.$task->user->last_name);
+            $username = $task->user->login.($username != '' ? ' ('.$username.')' : ''); ?>
+            <option value="<?= $task->user->id; ?>"><?= $username; ?></option>
+          <?php endif; ?>
+        </select>
+      </div>
     </div>
     <div class="sidebar">
       <div class="sidebar-item">

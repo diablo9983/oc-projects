@@ -235,6 +235,7 @@ class Projects extends Controller
 
       if($id) {
         $task->due_date = Request::has('due_date') ? Request::input('due_date') : null;
+        $task->user_id = Request::has('assignee') ? Request::input('assignee') : '';
       }
 
       $task->save();
@@ -273,12 +274,20 @@ class Projects extends Controller
     public function onGetUsers()
     {
       $query = Request::input('query');
+      $project = Request::input('project', 0);
 
-      $q = User::where('first_name','like','%'.$query.'%')
-             ->orWhere('last_name','like','%'.$query.'%')
-             ->orWhere('login','like','%'.$query.'%')
-             ->where('is_activated',1)
-             ->get();
+      if($project) {
+        $q = ProjectsModel::find($project)->user;
+        $q = $q->filter(function($value) use($query) {
+          return ((stripos($value->first_name, $query) !== FALSE || stripos($value->last_name, $query) !== FALSE || stripos($value->login, $query)  !== FALSE)
+                  && $value->is_activated == 1);
+        });
+      } else {
+        $q = User::where('is_activated',1)
+          ->where('first_name','like','%'.$query.'%')
+          ->orWhere('last_name','like','%'.$query.'%')
+          ->orWhere('login','like','%'.$query.'%')->get();
+      }
 
       $users = array();
       foreach($q as $user) {

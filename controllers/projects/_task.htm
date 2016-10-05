@@ -16,4 +16,9 @@
     </span>
   </div>
   <?php endif; ?>
+  <?php if($task->user): ?>
+  <div class="user" data-toggle="tooltip" title="<?= $task->user->login; ?>" data-placement="top">
+    <img src="<?= $task->user->getAvatarThumb(20, ['mode' => 'crop', 'extension' => 'png']); ?>" alt="<?= $task->user->login; ?>" />
+  </div>
+  <?php endif; ?>
 </div>

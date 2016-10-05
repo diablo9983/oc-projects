@@ -12,6 +12,14 @@ class Task extends Model
       'name'        => 'required'
     ];
 
+    public $hasOne = [
+      'user' => [
+        'Backend\Models\User',
+        'key' => 'id',
+        'otherKey' => 'user_id'
+      ]
+    ];
+
     public $table = 'bootstraphunter_projects_tasks';
 
 }

@@ -7,6 +7,32 @@ $(document).ready(function() {
     if(popup.find('#groups-order').length > 0) {
       initOrderGroups()
     }
+    if(popup.find('#editTask').length > 0) {
+      $('#assignee').select2({
+        placeholder: 'Pick an user',
+        width: 'auto',
+        minimumInputLength: 3,
+        allowClear: true,
+        ajax: {
+          delay: 300,
+          transport: function(params, success, error) {
+            $.request('onGetUsers', {
+              data: {
+                query: params.data.term,
+                project: $('#tasks-groups').data('project-id')
+              },
+              success: success,
+              error: error
+            })
+          },
+          processResults: function(data) {
+            return {
+              results: $.map(data, function(el) { return el })
+            }
+          }
+        }
+      })
+    }
   }).on('hidden.oc.popup', function(e) {
     var popup = $(e.relatedTarget)
     if(popup.find('#groups-order').length > 0) {

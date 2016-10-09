@@ -32,11 +32,34 @@ $(document).ready(function() {
           }
         }
       })
+
+      var progress = $('#progress')[0],
+      startValue = $('#progress-value').text()
+      noUiSlider.create(progress, {
+        start: parseInt(startValue),
+        step: 1,
+        connect: [true, false],
+        range: {
+          'min': 0,
+          'max': 100
+        }
+      })
+
+      progress.noUiSlider.on('slide', function() {
+        var value = progress.noUiSlider.get().replace('.00','')
+        $('input[type="hidden"][name="progress"]').val(value)
+        $('#progress-value').text(value)
+      })
     }
   }).on('hidden.oc.popup', function(e) {
     var popup = $(e.relatedTarget)
     if(popup.find('#groups-order').length > 0) {
       $('#groups-order').sortable('destroy')
+    }
+    if(popup.find('#editTask').length > 0) {
+      var progress = $('#progress')[0]
+      progress.noUiSlider.off()
+      progress.noUiSlider.destroy()
     }
   })
   $('#tasks-groups').on('ajaxUpdate', function() {

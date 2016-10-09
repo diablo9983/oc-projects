@@ -30,6 +30,11 @@
           <?php endif; ?>
         </select>
       </div>
+      <div class="form-group">
+        <label>Progress percentage <span class="progress-value"><span id="progress-value"><?= $task->progress; ?></span>%</span></label>
+        <div id="progress" class="progress"></div>
+        <input type="hidden" name="progress" value="<?= $task->progress; ?>" />
+      </div>
     </div>
     <div class="sidebar">
       <div class="sidebar-item">

@@ -379,6 +379,16 @@
   color: #666;
   background-color: #ECF0F1;
 }
+.task-inner.with-progress {
+  padding-bottom: 5px;
+}
+.task-inner.with-progress .user {
+  bottom: 15px;
+}
+.task .progress {
+  margin: 0px 8px;
+  height: 5px;
+}
 
 .list-group {
   list-style: none;
@@ -520,7 +530,7 @@
 #editTask .sidebar {
   width: 240px;
   margin-left: 20px;
-  background-color: #f3f3f3;
+  background-color: #f6f6f6;
   border-left: 1px solid #e6e6e6;
 }
 #editTask .sidebar .sidebar-item {
@@ -597,7 +607,47 @@
   display: none;
 }
 
+.progress.noUi-target {
+  overflow: visible;
+  margin: 10px 5px 0;
+  position: relative;
+}
 
+.noUi-connect,
+.noUi-origin {
+  position: absolute;
+}
+.noUi-connect {
+  height: 9px;
+  background-color: #1991D1;
+  border-radius: 3px;
+}
+.noUi-handle {
+  position: relative;
+  width: 17px;
+  height: 17px;
+  top: -4px;
+  left: -8.5px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 4px rgba(0,0,0,0.25);
+
+  -webkit-transition: all 0.15s;
+  -o-transition: all 0.15s;
+  transition: all 0.15s;
+}
+.noUi-handle.noUi-active {
+  width: 25px;
+  height: 25px;
+  top: -8px;
+  left: -12.5px;
+}
+
+.progress-value {
+  position: absolute;
+  right: 0;
+  top: 1px;
+}
 
 
 @media (max-width: 480px) {

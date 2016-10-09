@@ -1,4 +1,4 @@
-<div class="task-inner">
+<div class="task-inner<?php if($task->progress && $task->progress > 0): ?> with-progress<?php endif; ?>">
   <h4>
     <a href="javascript:;"
        class="edit pull-right"
@@ -20,5 +20,10 @@
   <div class="user" data-toggle="tooltip" title="<?= $task->user->login; ?>" data-placement="top">
     <img src="<?= $task->user->getAvatarThumb(20, ['mode' => 'crop', 'extension' => 'png']); ?>" alt="<?= $task->user->login; ?>" />
   </div>
+  <?php endif; ?>
+  <?php if($task->progress && $task->progress > 0): ?>
+    <div class="progress" data-toggle="tooltip" title="Progress: <?= $task->progress; ?>%">
+      <div class="progress-bar" style="width: <?= $task->progress; ?>%;"></div>
+    </div>
   <?php endif; ?>
 </div>

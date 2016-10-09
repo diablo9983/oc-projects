@@ -14,6 +14,7 @@ class TableCreateBootstraphunterProjectsTasks extends Migration
             $table->string('name', 255);
             $table->text('description');
             $table->integer('order')->unsigned();
+            $table->tinyInteger('progress')->unsigned()->default(0);
             $table->integer('task_groups_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamp('due_date')->nullable()->default(NULL);

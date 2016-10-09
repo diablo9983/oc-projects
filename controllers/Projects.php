@@ -39,7 +39,7 @@ class Projects extends Controller
       //$this->addCss('/plugins/bootstraphunter/projects/assets/css/selectize.css', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/sortable.js', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/jquery.fn.sortable.js', 'BootstrapHunter.Projects');
-      //$this->addJs('/plugins/bootstraphunter/projects/assets/js/selectize.js', 'BootstrapHunter.Projects');
+      $this->addJs('/plugins/bootstraphunter/projects/assets/js/nouislider.min.js', 'BootstrapHunter.Projects');
       $this->addJs('/plugins/bootstraphunter/projects/assets/js/tasks.js', 'BootstrapHunter.Projects');
 
       if(($project = ProjectsModel::find($id)) === null) {
@@ -236,6 +236,7 @@ class Projects extends Controller
       if($id) {
         $task->due_date = Request::has('due_date') ? Request::input('due_date') : null;
         $task->user_id = Request::has('assignee') ? Request::input('assignee') : '';
+        $task->progress = Request::input('progress');
       }
 
       $task->save();

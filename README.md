@@ -20,6 +20,8 @@ Simple Project and Task Management plugin for [October CMS](https://octobercms.c
 - [ ] Task tags
 - [ ] Priority states for tasks
 
-Licensed under [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html)
+Plugin icon: Made by [Madebyoliver](http://www.flaticon.com/authors/madebyoliver) from [flaticon.com](http://www.flaticon.com) and is licensed under [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
+
+Plugin licensed under [GNU GPL 3.0](https://www.gnu.org/licenses/gpl-3.0.html)
 
 #### [Bootstrap Hunter](https://bootstrap-hunter.com) &copy; 2016

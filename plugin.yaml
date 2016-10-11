@@ -9,4 +9,4 @@ navigation:
         label: 'bootstraphunter.projects::lang.plugin.projects'
         url: bootstraphunter/projects/projects
         icon: icon-tasks
-        
+        iconSvg: 'plugins/bootstraphunter/projects/assets/images/projects-icon.svg'

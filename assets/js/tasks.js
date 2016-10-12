@@ -99,6 +99,8 @@ $(document).ready(function() {
     $('#date').datePicker('emptyValues')
   })
 
+  detectMultiLine()
+
   $(window).on('resize', setTasksHeight)
   setTasksHeight()
 })
@@ -181,6 +183,7 @@ function saveTask(el, data, update)
     $('#tasks-'+data.group).append(data.task)
     updatePlaceholder($('#tasks-'+data.group))
   }
+  detectMultiLine()
   if(typeof el !== 'undefined') {
     $(el).parents('.modal').trigger('close.oc.popup')
   }
@@ -203,4 +206,13 @@ function hideGroup(data,fromPopup)
     li.find('a.show-group').tooltip('hide')
     li.find('a.show-group').remove()
   }
+}
+
+function detectMultiLine()
+{
+  $('.task-inner h4 a:last-child').each(function() {
+    if($(this).height() > 30) {
+      $(this).closest('.task-inner').addClass('multi-line')
+    }
+  })
 }

@@ -347,7 +347,7 @@
   overflow: hidden;
 }
 
-.task:hover .user {
+.task:hover .task-inner:not(.multi-line) .user {
   right: 35px;
 }
 

@@ -251,6 +251,10 @@
   cursor: move;
   position: relative;
 }
+.task .task-inner.task-overdue {
+  background-color: rgba(255,0,0,0.04);
+  border-radius: 5px;
+}
 .task a {
   color: #333;
 }
@@ -325,6 +329,10 @@
   color: #888;
   padding: 0 10px 5px;
 }
+.task .due-date.overdue {
+  font-weight: bold;
+  color: #d02;
+}
 .task .user {
   position: absolute;
   bottom: 8px;
@@ -377,7 +385,7 @@
 .task .edit:hover,
 .list-group a:hover {
   color: #666;
-  background-color: #ECF0F1;
+  background-color: rgba(0,0,0,0.075);
 }
 .task-inner.with-progress {
   padding-bottom: 5px;

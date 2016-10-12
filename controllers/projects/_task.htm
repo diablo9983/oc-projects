@@ -1,4 +1,28 @@
-<div class="task-inner<?php if($task->progress && $task->progress > 0): ?> with-progress<?php endif; ?>">
+<?php if($task->due_date):
+  $now = Carbon\Carbon::now();
+  $diffDays = $now->diffInDays($task->due_date,false);
+  if($diffDays <= 0) {
+    $overdue = true;
+    $date = 'Overdue by ';
+    if($diffDays < -30) {
+      $months = $now->diffInMonths($task->due_date);
+      $months = $months > 1 ? $months : 1;
+      $date .= ($months > 1 ? $months : ' a ').' '.str_plural('month', $months);
+    } else {
+      $days = $now->diffInDays($task->due_date);
+      $days = $days > 1 ? $days : 1;
+      $date .= ($days > 1 ? $days : ' a ').' '.str_plural('day', $days);
+    }
+  } else {
+    $overdue = false;
+    $date = $task->due_date->toFormattedDateString();
+  }
+  endif; ?>
+<div class="task-inner
+<?php if($task->progress && $task->progress > 0): ?> with-progress<?php endif; ?>
+<?php if($task->due_date): ?> with-due-date<?php endif; ?>
+<?php if($task->due_date && $overdue): ?> task-overdue<?php endif; ?>
+">
   <h4>
     <a href="javascript:;"
        class="edit pull-right"
@@ -9,10 +33,10 @@
     <a href="#"><?= $task->name; ?></a>
   </h4>
   <?php if(!is_null($task->due_date)): ?>
-  <div class="due-date">
+  <div class="due-date<?php if($overdue): ?> overdue<?php endif; ?>">
     <span title="<?= $task->due_date; ?>">
       <i class="icon-calendar-o"></i>
-      <?= $task->due_date->toFormattedDateString(); ?>
+      <?= $date; ?>
     </span>
   </div>
   <?php endif; ?>

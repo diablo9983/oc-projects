@@ -2,7 +2,7 @@
 
 Simple Project and Task Management plugin for [October CMS](https://octobercms.com)
 
-![Screenshot](https://dl.dropboxusercontent.com/u/5502949/bh_projects_screenshot.png)
+![Screenshot](https://dl.dropboxusercontent.com/content_link/OXmRPwtzX7FhomZNV03mTSE35ALFBmjecezQD4BTZD4BoMR886RK149PWIItHduf/file)
 
 #####Features
 - [x] Add/Edit Projects

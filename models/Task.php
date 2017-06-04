@@ -22,4 +22,15 @@ class Task extends Model
 
     public $table = 'bootstraphunter_projects_tasks';
 
+    public function scopeActive($query) {
+        return $query->where('status', 0);
+    }
+
+    public function scopeCompleted($query) {
+        return $query->where('status', 1);
+    }
+
+    public function scopeArchived($query, bool $archive = NULL) {
+        return $query->where('archived', $archive ? '=' : '!=', 1);
+    }
 }

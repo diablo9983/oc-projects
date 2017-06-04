@@ -61,7 +61,13 @@
   white-space: pre-line;
   text-overflow: '[...]';
 }
-
+.projects .project-progress {
+    height: 14px;
+}
+.projects .progress {
+  margin: 0 0 8px;
+  height: 6px;
+}
 .projects .project .members {
   height: 20px;
   margin-bottom: 10px;

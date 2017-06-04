@@ -31,7 +31,20 @@ class Projects extends Controller
 
     public function index()
     {
-      $this->vars['projects'] = $this->makePartial('projects', ['projects' => ProjectsModel::all()]);
+        $projects = ProjectsModel::all();
+
+        foreach($projects as &$project) {
+            $tasks = $project->task()->archived(false)->get();
+            $count = $project->taskCount = $tasks->count();
+            if($count > 0) {
+                $project->taskCompleted = $tasks->where('status', 1)->count();
+                $project->taskActive = $tasks->where('status', 0)->count();
+                $p = 100 / $tasks->count();
+                $project->projectProgress = $project->taskCompleted * $p;
+            }
+        }
+
+        $this->vars['projects'] = $this->makePartial('projects', ['projects' => $projects]);
     }
 
     public function view($id = 0)
@@ -115,11 +128,7 @@ class Projects extends Controller
 
       $group->save();
 
-      if($id) {
-        Flash::success('Group has been updated.');
-      } else {
-        Flash::success('Group has been added.');
-      }
+      Flash::success($id ? 'Group has been updated.' : 'Group has been added.');
       return true;
     }
 

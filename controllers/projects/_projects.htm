@@ -27,6 +27,13 @@
           </div>
         <?php endforeach; ?>
       </div>
+      <div class="project-progress">
+      <?php if($project->taskCount > 0): ?>
+          <div class="progress" data-toggle="tooltip" title="Progress: <?= $project->projectProgress; ?>%">
+              <div class="progress-bar" style="width: <?= $project->projectProgress; ?>%;"></div>
+          </div>
+      <?php endif; ?>
+      </div>
       <span class="created text-muted">
         <?= $project->updated_at ? 'Updated on '.$project->updated_at : 'Created on '.$project->created_at; ?>
       </span>

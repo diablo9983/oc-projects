@@ -1,5 +1,7 @@
 ## BH Projects
 
+Projects development is paused for some time
+
 Simple Project and Task Management plugin for [October CMS](https://octobercms.com)
 
 ![Screenshot](https://raw.githubusercontent.com/diablo9983/oc-projects/master/image.png)

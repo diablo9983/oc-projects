@@ -6,7 +6,7 @@ Simple Project and Task Management plugin for [October CMS](https://octobercms.c
 
 ![Screenshot](https://raw.githubusercontent.com/diablo9983/oc-projects/master/image.png)
 
-#####Features
+#### Features
 - [x] Add/Edit Projects
 - [x] Add/Edit Task Groups
 - [x] Add/Edit Tasks

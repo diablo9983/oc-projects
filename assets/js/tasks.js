@@ -4,6 +4,7 @@ $(document).ready(function() {
 
   $(window).on('shown.oc.popup', function(e) {
     var popup = $(e.relatedTarget)
+    destroyGroups()
     if(popup.find('#groups-order').length > 0) {
       initOrderGroups()
     }
@@ -61,6 +62,7 @@ $(document).ready(function() {
       progress.noUiSlider.off()
       progress.noUiSlider.destroy()
     }
+    initGroups()
   })
   $('#tasks-groups').on('ajaxUpdate', function() {
     initGroups()

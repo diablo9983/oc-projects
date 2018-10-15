@@ -229,10 +229,11 @@ class Projects extends Controller
         $task = TaskModel::find($id);
       } else {
         $task = new TaskModel;
+        $task->user_id = 0;
       }
 
-      $task->name = Request::input('name');
-      $task->description = Request::input('description');
+      Request::has('name') && $task->name = Request::input('name');
+      Request::has('description') && $task->description = Request::input('description');
 
       if($group_id) {
         $order = TaskModel::where('task_groups_id',$group_id)->orderBy('order','desc')->first();
@@ -243,9 +244,9 @@ class Projects extends Controller
       }
 
       if($id) {
-        $task->due_date = Request::has('due_date') ? Request::input('due_date') : null;
-        $task->user_id = Request::has('assignee') ? Request::input('assignee') : '';
-        $task->progress = Request::input('progress');
+        (Request::input('due_date') != '') && ($task->due_date = Request::input('due_date'));
+        Request::has('assignee') && $task->user_id = Request::input('assignee');
+        Request::has('progress') && $task->progress = Request::input('progress');
       }
 
       $task->save();
